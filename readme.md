@@ -1,4 +1,4 @@
-### Genisis Kiln Controller reverse engineering
+# Genisis Kiln Controller reverse engineering
 
 ## Api Documentation
 for some basic api documentation (wip), checkout [Api Routes](api_routes.md)
