@@ -10,7 +10,12 @@ async fn main() {
     let args: Vec<String> = env::args().collect();
     match args[1].as_str() {
         "test-account" => {
-            login(args[2].clone(), args[3].clone()).await;
+            let res = login(args[2].clone(), args[3].clone()).await;
+            if res.is_some() {
+                println!("Logged in successfully!");
+            } else {
+                println!("Invalid credentials!");
+            }
         },
         "slim" => {},
         "view" => {},
@@ -21,20 +26,17 @@ async fn main() {
     }
 }
 
-async fn login(email: String, password: String) -> bool {
+async fn login(email: String, password: String) -> Option<model::LoginResponse> {
     let client = reqwest::Client::new();
     let login_cred = model::LoginRequest::new(email, password);
-    dbg!(&login_cred);
     let res = client.post("https://www.bartinst.com/users/login.json")
         .json(&login_cred)
         .send().await.unwrap();
     if res.status() == StatusCode::OK {
         let res = res.json::<model::LoginResponse>().await.unwrap();
-        dbg!(res);
-        true
+        Some(res)
     } else {
-        println!("Invalid credentials");
-        false
+        None
     }
 }
 
