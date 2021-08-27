@@ -1,5 +1,5 @@
 [package]
-name = "server"
+name = "kiln_server"
 version = "0.1.0"
 authors = ["Elliot Nash <elliotnash@gmail.com>"]
 edition = "2018"
