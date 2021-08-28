@@ -1,5 +1,5 @@
 use std::env;
-use reqwest::StatusCode;
+use reqwest::{StatusCode, header::HeaderMap};
 
 mod model;
 
@@ -17,7 +17,14 @@ async fn main() {
                 println!("Invalid credentials!");
             }
         },
-        "slim" => {},
+        "slim" => {
+            let res = login(args[2].clone(), args[3].clone()).await;
+            if let Some(res) = res {
+                get_slim(&res, res.controller_ids[0].clone()).await;
+            } else {
+
+            }
+        },
         "view" => {},
         command => {
             println!("\nThe command `{}` does not exist", command);
@@ -38,6 +45,36 @@ async fn login(email: String, password: String) -> Option<model::LoginResponse> 
     } else {
         None
     }
+}
+
+async fn get_slim(cred: &model::LoginResponse, controller_id: String) {
+    // set headers
+    let mut headers = HeaderMap::new();
+    headers.insert("x-app-name-token", "kiln-aid".parse().unwrap());
+    headers.insert("accept", "application/json".parse().unwrap());
+    headers.insert("content-type", "application/json".parse().unwrap());
+    headers.insert("origin", "http://localhost".parse().unwrap());
+    headers.insert("x-requested-with", "com.bartinst.kilnaid".parse().unwrap());
+    headers.insert("sec-fetch-site", "cross-site".parse().unwrap());
+    headers.insert("sec-fetch-mode", "cors".parse().unwrap());
+    headers.insert("sec-fetch-dest", "empty".parse().unwrap());
+    headers.insert("referer", "http://localhost/".parse().unwrap());
+    headers.insert("accept-encoding", "gzip, deflate".parse().unwrap());
+    headers.insert("accept-language", "en-US,en;q=0.9".parse().unwrap());
+
+    let client = reqwest::Client::builder()
+        .default_headers(headers)
+        .user_agent("Mozilla/5.0 (Linux; Android 11; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/92.0.4515.159 Mobile Safari/537.36")
+        .gzip(true)
+        .build().unwrap();
+    let slim_req = model::SlimRequest::new(controller_id);
+    let res = client.post(format!("https://kiln.bartinst.com/kilns/slim?token=${}&user_email=${}",
+        cred.authentication_token, cred.email))
+        .json(&slim_req)
+        .send().await.unwrap();
+    dbg!(&res);
+    let body = res.text().await.unwrap();
+    dbg!(body);
 }
 
 fn send_help() {

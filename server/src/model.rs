@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct LoginRequest {
-    user: User
+    pub user: User
 }
 impl LoginRequest {
     pub fn new(email: String, password: String) -> Self {
@@ -13,19 +13,29 @@ impl LoginRequest {
 }
 #[derive(Debug, Deserialize, Serialize)]
 pub struct User {
-    email: String,
-    password: String
+    pub email: String,
+    pub password: String
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct LoginResponse {
-    authentication_token: String,
-    controller_ids: Vec<String>,
-    controller_names: HashMap<String, String>,
-    email: String,
-    needs_to_accept_new_terms_and_conditions: bool,
-    new_terms_and_conditions: String,
-    redirect_url: String,
-    role: Option<String>,
-    status: String
+    pub authentication_token: String,
+    pub controller_ids: Vec<String>,
+    pub controller_names: HashMap<String, String>,
+    pub email: String,
+    pub needs_to_accept_new_terms_and_conditions: bool,
+    pub new_terms_and_conditions: String,
+    pub redirect_url: String,
+    pub role: Option<String>,
+    pub status: String
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct SlimRequest {
+    pub ids: Vec<String>
+}
+impl SlimRequest {
+    pub fn new(id: String) -> Self {
+        Self {ids: vec![id]}
+    }
 }
