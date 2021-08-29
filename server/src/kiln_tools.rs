@@ -23,10 +23,18 @@ async fn main() {
                 let slim_res = get_slim(&res, res.controller_ids[0].clone()).await;
                 dbg!(slim_res);
             } else {
-
+                println!("Invalid credentials!");
             }
         },
-        "view" => {},
+        "view" => {
+            let res = login(args[2].clone(), args[3].clone()).await;
+            if let Some(res) = res {
+                let view_res = get_view(&res, res.controller_ids[0].clone()).await;
+                dbg!(view_res);
+            } else {
+                println!("Invalid credentials!");
+            }
+        },
         command => {
             println!("\nThe command `{}` does not exist", command);
             send_help();
@@ -64,6 +72,26 @@ async fn get_slim(cred: &model::LoginResponse, controller_id: String) -> model::
         .json(&slim_req)
         .send().await.unwrap();
     res.json::<model::SlimResponse>().await.unwrap()
+}
+
+async fn get_view(cred: &model::LoginResponse, controller_id: String) -> model::ViewResponse {
+    // set headers
+    let mut headers = HeaderMap::new();
+    headers.insert("x-app-name-token", "kiln-aid".parse().unwrap());
+
+    let client = reqwest::Client::builder()
+        .default_headers(headers)
+        .build().unwrap();
+    let slim_req = model::SlimRequest::new(controller_id);
+
+    let url = format!("https://kiln.bartinst.com/kilns/view?token={}&user_email={}",
+        cred.authentication_token, cred.email);
+    let res = client.post(url)
+        .json(&slim_req)
+        .send().await.unwrap();
+    let text = res.text().await.unwrap();
+    dbg!(&text);
+    serde_json::from_str::<model::ViewResponse>(&text).unwrap()
 }
 
 fn send_help() {
