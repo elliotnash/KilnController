@@ -50,7 +50,7 @@ invalid email or password returns 401 with json content:
 
 ## Kiln Requests
 
-The bellow requests rely on the x-app-name-token header being passed to authenticate
+The bellow requests rely on the x-app-name-token header being passed to authenticate.
 
 ```yml
 x-app-name-token: kiln-aid
