@@ -43,7 +43,7 @@ async fn main() {
         "test-interval" => {
             let res = login(args[2].clone(), args[3].clone()).await;
             if let Some(res) = res {
-                test_interval(&res).await;
+                test_interval(res).await;
             } else {
                 println!("Invalid credentials!");
             }
@@ -55,17 +55,20 @@ async fn main() {
     }
 }
 
-async fn test_interval(cred: &LoginResponse) {
+async fn test_interval(cred: LoginResponse) {
+    println!("Calculating server update interval. Please be patient");
     let mut last_time = Utc::now();
-    loop {
-        let slim_kiln = &get_slim(cred, cred.controller_ids[0].clone()).await.kilns[0];
+    let handle = actix_web::rt::spawn(async move {loop {
+        let slim_kiln = &get_slim(&cred, cred.controller_ids[0].clone()).await.kilns[0];
         if slim_kiln.updated_at > last_time {
             let interval = slim_kiln.updated_at - last_time;
             println!("Data was updated. Interval: {}:{:02}.{:04}", interval.num_minutes(), interval.num_seconds()%60, interval.num_milliseconds()%1000);
         }
         last_time = slim_kiln.updated_at;
         sleep(Duration::from_secs(5)).await;
-    }
+    }});
+    actix_web::rt::signal::ctrl_c().await.expect("Could not register ctrl+c handler");
+    handle.abort();
 }
 
 fn send_help() {
