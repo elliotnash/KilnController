@@ -50,22 +50,10 @@ invalid email or password returns 401 with json content:
 
 ## Kiln Requests
 
-The bellow requests all rely on very specific headers being passed.
-requests should be made via http2, and these headers seem to work:
+The bellow requests rely on the x-app-name-token header being passed to authenticate
 
 ```yml
 x-app-name-token: kiln-aid
-accept: application/json
-user-agent: Mozilla/5.0 (Linux; Android 11; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/92.0.4515.159 Mobile Safari/537.36
-content-type: application/json
-origin: http://localhost
-x-requested-with: com.bartinst.kilnaid
-sec-fetch-site: cross-site
-sec-fetch-mode: cors
-sec-fetch-dest: empty
-referer: http://localhost/
-accept-encoding: gzip, deflate
-accept-language: en-US,en;q=0.9
 ```
 
 ## Slim Kiln Info Request
