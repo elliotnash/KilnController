@@ -60,12 +60,19 @@ async fn test_interval(cred: LoginResponse) {
     println!("Calculating server update interval. Please be patient");
     let mut last_time = Utc::now();
     let handle = actix_web::rt::spawn(async move {loop {
-        let slim_kiln = &get_slim(&cred, cred.controller_ids[0].clone()).await.unwrap().kilns[0];
-        if slim_kiln.updated_at > last_time {
-            let interval = slim_kiln.updated_at - last_time;
-            println!("Data was updated. Interval: {}:{:02}.{:04}", interval.num_minutes(), interval.num_seconds()%60, interval.num_milliseconds()%1000);
+        match get_slim(&cred, cred.controller_ids[0].clone()).await {
+            Ok(slim_res) => {
+                let slim_kiln = &slim_res.kilns[0];
+                if slim_kiln.updated_at > last_time {
+                    let interval = slim_kiln.updated_at - last_time;
+                    println!("Data was updated. Interval: {}:{:02}.{:04}", interval.num_minutes(), interval.num_seconds()%60, interval.num_milliseconds()%1000);
+                }
+                last_time = slim_kiln.updated_at;
+            },
+            Err(err) => {
+                println!("Error requesting kiln data: {:?}", err);
+            }
         }
-        last_time = slim_kiln.updated_at;
         sleep(Duration::from_secs(5)).await;
     }});
     actix_web::rt::signal::ctrl_c().await.expect("Could not register ctrl+c handler");
