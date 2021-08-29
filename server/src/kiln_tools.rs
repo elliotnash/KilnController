@@ -22,8 +22,8 @@ async fn main() {
         "slim" => {
             let res = login(args[2].clone(), args[3].clone()).await;
             if let Some(res) = res {
-                let slim_res = get_slim(&res, res.controller_ids[0].clone()).await;
-                dbg!(slim_res);
+                let slim_kiln = &get_slim(&res, res.controller_ids[0].clone()).await.kilns[0];
+                dbg!(slim_kiln);
             } else {
                 println!("Invalid credentials!");
             }
@@ -31,8 +31,8 @@ async fn main() {
         "view" => {
             let res = login(args[2].clone(), args[3].clone()).await;
             if let Some(res) = res {
-                let view_res = get_view(&res, res.controller_ids[0].clone()).await;
-                dbg!(view_res);
+                let view_kiln = &get_view(&res, res.controller_ids[0].clone()).await.kilns[0];
+                dbg!(view_kiln);
             } else {
                 println!("Invalid credentials!");
             }

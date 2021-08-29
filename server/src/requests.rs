@@ -8,10 +8,10 @@ lazy_static!{
 }
 
 fn create_client() -> reqwest::Client {
-    // set headers
+    // create headers
     let mut headers = HeaderMap::new();
     headers.insert("x-app-name-token", "kiln-aid".parse().unwrap());
-  
+    // build client
     reqwest::Client::builder()
         .default_headers(headers)
         .build().unwrap()
