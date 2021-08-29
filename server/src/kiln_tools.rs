@@ -3,10 +3,11 @@ use std::{env, time::Duration};
 use actix_web::rt::time::sleep;
 use chrono::Utc;
 use model::LoginResponse;
-use requests::{login, get_slim, get_view};
+use request::{login, get_slim, get_view};
 
 mod model;
-mod requests;
+mod error;
+mod request;
 
 #[actix_web::main]
 async fn main() {
@@ -16,7 +17,7 @@ async fn main() {
     match args[1].as_str() {
         "test-account" => {
             let res = login(args[2].clone(), args[3].clone()).await;
-            if let Some(res) = res {
+            if let Ok(res) = res {
                 println!("Logged in successfully! token: {}, kiln: {}", res.authentication_token, res.controller_ids[0]);
             } else {
                 println!("Invalid credentials!");
@@ -24,8 +25,8 @@ async fn main() {
         },
         "slim" => {
             let res = login(args[2].clone(), args[3].clone()).await;
-            if let Some(res) = res {
-                let slim_kiln = &get_slim(&res, res.controller_ids[0].clone()).await.kilns[0];
+            if let Ok(res) = res {
+                let slim_kiln = &get_slim(&res, res.controller_ids[0].clone()).await.unwrap().kilns[0];
                 println!("{:#?}", slim_kiln);
             } else {
                 println!("Invalid credentials!");
@@ -33,8 +34,8 @@ async fn main() {
         },
         "view" => {
             let res = login(args[2].clone(), args[3].clone()).await;
-            if let Some(res) = res {
-                let view_kiln = &get_view(&res, res.controller_ids[0].clone()).await.kilns[0];
+            if let Ok(res) = res {
+                let view_kiln = &get_view(&res, res.controller_ids[0].clone()).await.unwrap().kilns[0];
                 println!("{:#?}", view_kiln);
             } else {
                 println!("Invalid credentials!");
@@ -42,7 +43,7 @@ async fn main() {
         },
         "test-interval" => {
             let res = login(args[2].clone(), args[3].clone()).await;
-            if let Some(res) = res {
+            if let Ok(res) = res {
                 test_interval(res).await;
             } else {
                 println!("Invalid credentials!");
@@ -59,7 +60,7 @@ async fn test_interval(cred: LoginResponse) {
     println!("Calculating server update interval. Please be patient");
     let mut last_time = Utc::now();
     let handle = actix_web::rt::spawn(async move {loop {
-        let slim_kiln = &get_slim(&cred, cred.controller_ids[0].clone()).await.kilns[0];
+        let slim_kiln = &get_slim(&cred, cred.controller_ids[0].clone()).await.unwrap().kilns[0];
         if slim_kiln.updated_at > last_time {
             let interval = slim_kiln.updated_at - last_time;
             println!("Data was updated. Interval: {}:{:02}.{:04}", interval.num_minutes(), interval.num_seconds()%60, interval.num_milliseconds()%1000);

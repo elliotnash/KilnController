@@ -30,7 +30,10 @@ pub struct LoginResponse {
     pub role: Option<String>,
     pub status: String
 }
-
+#[derive(Debug, Deserialize, Serialize)]
+pub struct LoginError {
+    message: String
+}
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct SlimRequest {
