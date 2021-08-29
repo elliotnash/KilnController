@@ -56,6 +56,8 @@ The bellow requests rely on the x-app-name-token header being passed to authenti
 x-app-name-token: kiln-aid
 ```
 
+Data is updated server side about once per minute.
+
 ## Slim Kiln Info Request
 
 returns basic info about a controller from the controller id
