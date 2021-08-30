@@ -13,7 +13,7 @@ lazy_static!{
         let manager = SqliteConnectionManager::file(home_dir);
         let pool = Pool::new(manager).unwrap();
         let conn = pool.get().unwrap();
-        conn.execute("CREATE TABLE data (
+        conn.execute("CREATE TABLE IF NOT EXISTS data (
             time INTEGER PRIMARY KEY,
             data BLOB
         )", []).unwrap();
