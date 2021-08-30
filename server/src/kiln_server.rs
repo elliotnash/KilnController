@@ -8,6 +8,7 @@ use model::LoginResponse;
 use request::{get_view, login};
 
 mod config;
+mod db;
 mod model;
 mod error;
 mod request;
@@ -40,6 +41,8 @@ async fn fetch_task(cred: LoginResponse) {
             Ok(view_res) => {
                 let view_kiln = &view_res.kilns[0];
                 info!("recieved kiln update \n{:#?}", view_kiln);
+                info!("Adding update");
+                db::add_update(view_kiln);
             },
             Err(err) => {
                 warn!("Error requesting kiln data: \n{:#?}", err);

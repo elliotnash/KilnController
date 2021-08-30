@@ -27,6 +27,7 @@ pub async fn login(email: String, password: String) -> Result<model::LoginRespon
     }
 }
 
+#[allow(dead_code)]
 pub async fn get_slim(cred: &model::LoginResponse, controller_id: String) -> Result<model::SlimResponse> {
     let slim_req = model::SlimRequest::new(controller_id);
 
