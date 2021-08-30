@@ -1,0 +1,14 @@
+version: 2
+updates:
+
+  - package-ecosystem: "npm"
+    directory: "/hub_client"
+    schedule:
+      # Check for updates to GitHub Actions every weekday
+      interval: "daily"
+
+  - package-ecosystem: "cargo"
+    directory: "/hub_server"
+    schedule:
+      # Check for updates to GitHub Actions every weekday
+      interval: "daily"
