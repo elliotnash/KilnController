@@ -13,44 +13,52 @@ mod request;
 async fn main() {
     env::set_var("RUST_LOG", "actix_web=warn,kiln_server=debug");
     env_logger::init();
-    let args: Vec<String> = env::args().collect();
-    match args[1].as_str() {
-        "test-account" => {
-            let res = login(args[2].clone(), args[3].clone()).await;
-            if let Ok(res) = res {
-                println!("Logged in successfully! token: {}, kiln: {}", res.authentication_token, res.controller_ids[0]);
-            } else {
-                println!("Invalid credentials!");
+    let mut args: Vec<String> = env::args().collect();
+    match args.len() {
+        4 => {
+            match args[1].as_str() {
+                "test-account" => {
+                    let res = login(args[2].clone(), args[3].clone()).await;
+                    if let Ok(res) = res {
+                        println!("Logged in successfully! token: {}, kiln: {}", res.authentication_token, res.controller_ids[0]);
+                    } else {
+                        println!("Invalid credentials!");
+                    }
+                },
+                "slim" => {
+                    let res = login(args[2].clone(), args[3].clone()).await;
+                    if let Ok(res) = res {
+                        let slim_kiln = &get_slim(&res, res.controller_ids[0].clone()).await.unwrap().kilns[0];
+                        println!("{:#?}", slim_kiln);
+                    } else {
+                        println!("Invalid credentials!");
+                    }
+                },
+                "view" => {
+                    let res = login(args[2].clone(), args[3].clone()).await;
+                    if let Ok(res) = res {
+                        let view_kiln = &get_view(&res, res.controller_ids[0].clone()).await.unwrap().kilns[0];
+                        println!("{:#?}", view_kiln);
+                    } else {
+                        println!("Invalid credentials!");
+                    }
+                },
+                "test-interval" => {
+                    let res = login(args[2].clone(), args[3].clone()).await;
+                    if let Ok(res) = res {
+                        test_interval(res).await;
+                    } else {
+                        println!("Invalid credentials!");
+                    }
+                },
+                command => {
+                    println!("\nThe command `{}` does not exist", command);
+                    send_help();
+                }
             }
-        },
-        "slim" => {
-            let res = login(args[2].clone(), args[3].clone()).await;
-            if let Ok(res) = res {
-                let slim_kiln = &get_slim(&res, res.controller_ids[0].clone()).await.unwrap().kilns[0];
-                println!("{:#?}", slim_kiln);
-            } else {
-                println!("Invalid credentials!");
-            }
-        },
-        "view" => {
-            let res = login(args[2].clone(), args[3].clone()).await;
-            if let Ok(res) = res {
-                let view_kiln = &get_view(&res, res.controller_ids[0].clone()).await.unwrap().kilns[0];
-                println!("{:#?}", view_kiln);
-            } else {
-                println!("Invalid credentials!");
-            }
-        },
-        "test-interval" => {
-            let res = login(args[2].clone(), args[3].clone()).await;
-            if let Ok(res) = res {
-                test_interval(res).await;
-            } else {
-                println!("Invalid credentials!");
-            }
-        },
-        command => {
-            println!("\nThe command `{}` does not exist", command);
+        }
+        len => {
+            println!("\nInvalid number of arguments: {}", len-1);
             send_help();
         }
     }
