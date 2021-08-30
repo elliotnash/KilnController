@@ -25,7 +25,7 @@ env_logger = "0.9"
 log = "0.4"
 r2d2 = "0.8"
 r2d2_sqlite = "0.18"
-
+toml = "0.5"
 
 [dependencies.rusqlite]
 version = "0.25"
