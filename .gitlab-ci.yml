@@ -1,0 +1,37 @@
+# # Cache downloaded dependencies and plugins between builds.
+# # To keep cache across branches add 'key: "$CI_JOB_NAME"'
+# cache:
+#   paths:
+#     - etech_client/node_modules
+
+stages:
+  - build
+
+# # webpack build stage
+# build:webpack:
+#   image: node:latest
+#   stage: build
+#   script:
+#     - "cd hub_client"
+#     - "npm i"
+#     - "npm run build"
+#   artifacts:
+#     paths:
+#       - "hub_client/dist/*"
+#       - "hub_server/target/x86_64-unknown-linux-musl/release/hub_server"
+#     expire_in: never
+
+# cargo build stage
+build:cargo:
+  image: ekidd/rust-musl-builder:latest
+  stage: build
+  script:
+    - "cd server"
+    - "rustc --version && cargo --version"
+    - "sudo rm -r target"
+    - "cargo build --release --target=x86_64-unknown-linux-musl"
+  artifacts:
+    paths:
+      - "server/target/x86_64-unknown-linux-musl/release/kiln_server"
+      - "server/target/x86_64-unknown-linux-musl/release/kiln_tools"
+    expire_in: never
