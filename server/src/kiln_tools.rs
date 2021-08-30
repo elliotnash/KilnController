@@ -13,7 +13,7 @@ mod request;
 async fn main() {
     env::set_var("RUST_LOG", "actix_web=warn,kiln_server=debug");
     env_logger::init();
-    let mut args: Vec<String> = env::args().collect();
+    let args: Vec<String> = env::args().collect();
     match args.len() {
         4 => {
             match args[1].as_str() {
