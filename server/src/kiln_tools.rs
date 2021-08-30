@@ -73,7 +73,7 @@ async fn test_interval(cred: LoginResponse) {
                 println!("Error requesting kiln data: {:?}", err);
             }
         }
-        sleep(Duration::from_secs(5)).await;
+        sleep(Duration::from_secs(10)).await;
     }});
     actix_web::rt::signal::ctrl_c().await.expect("Could not register ctrl+c handler");
     handle.abort();

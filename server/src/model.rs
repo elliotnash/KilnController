@@ -52,7 +52,6 @@ pub struct SlimResponse {
 }
 #[derive(Debug, Deserialize, Serialize)]
 pub struct SlimKiln {
-    pub _id: String,
     pub mac_address: String,
     //TODO should be enum, need to discover all variants
     pub mode: String,

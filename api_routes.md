@@ -56,7 +56,7 @@ The bellow requests rely on the x-app-name-token header being passed to authenti
 x-app-name-token: kiln-aid
 ```
 
-Data is updated server side about once per minute.
+Data is usually updated server side about once per minute, although updates are occasionally skipped.
 
 ## Slim Kiln Info Request
 
