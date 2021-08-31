@@ -22,8 +22,8 @@ stages:
 #     expire_in: never
 
 # cargo build stage
-build:cargo:
-  image: ekidd/rust-musl-builder:latest
+build:server:linux:
+  image: joseluisq/rust-linux-darwin-builder:latest
   stage: build
   script:
     - "cd server"
