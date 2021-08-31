@@ -22,6 +22,20 @@ stages:
 #     expire_in: never
 
 # cargo build stage
+build:server:mac:
+  image: joseluisq/rust-linux-darwin-builder:latest
+  stage: build
+  script:
+    - "cd server"
+    - "rustc --version && cargo --version"
+    - "rm -rf target"
+    - "cargo build --release --target=x86_64-apple-darwin"
+  artifacts:
+    paths:
+      - "server/target/x86_64-apple-darwin/release/kiln_server"
+      - "server/target/x86_64-apple-darwin/release/kiln_tools"
+    expire_in: never
+
 build:server:linux:
   image: joseluisq/rust-linux-darwin-builder:latest
   stage: build
