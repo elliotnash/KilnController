@@ -29,7 +29,7 @@ build:server:mac:
     - "cd server"
     - "rustc --version && cargo --version"
     - "rm -rf target"
-    - "cargo build --release --target=x86_64-apple-darwin"
+    - "CC=o64-clang CXX=o64-clang++ cargo build --release --target=x86_64-apple-darwin"
   artifacts:
     paths:
       - "server/target/x86_64-apple-darwin/release/kiln_server"
