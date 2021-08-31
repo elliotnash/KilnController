@@ -28,7 +28,7 @@ build:server:linux:
   script:
     - "cd server"
     - "rustc --version && cargo --version"
-    - "sudo rm -rf target"
+    - "rm -rf target"
     - "cargo build --release --target=x86_64-unknown-linux-musl"
   artifacts:
     paths:
