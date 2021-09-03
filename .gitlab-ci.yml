@@ -51,7 +51,7 @@ build:server:linux:
     expire_in: never
 
 build:server:windows:
-  image: tomaka/rust-mingw-docker:latest
+  image: mersinvald/rust-mingw-docker:latest
   stage: build
   script:
     - "cd server"
@@ -60,6 +60,6 @@ build:server:windows:
     - "cargo build --release --target=x86_86-pc-windows-gnu"
   artifacts:
     paths:
-      - "server/target/x86_86-pc-windows-gnu/release/kiln_server"
-      - "server/target/x86_86-pc-windows-gnu/release/kiln_tools"
+      - "server/target/x86_86-pc-windows-gnu/release/kiln_server.exe"
+      - "server/target/x86_86-pc-windows-gnu/release/kiln_tools.exe"
     expire_in: never
