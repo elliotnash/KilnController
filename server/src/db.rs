@@ -42,14 +42,14 @@ pub fn get_updates(last_time: Option<DateTime<Utc>>) -> Result<Vec<ViewKiln>, Bo
     FROM
         data
     WHERE
-        time >= ?1
+        time < ?1
     ORDER BY
         time DESC
     LIMIT ?2
     ")?;
 
     let mut rows = stmt.query(params![
-        last_time.map(|t| t.timestamp_millis()).unwrap_or(0),
+        last_time.map(|t| t.timestamp_millis()).unwrap_or(i64::MAX),
         5
     ])?;
 
