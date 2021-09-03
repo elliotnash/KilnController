@@ -1,6 +1,5 @@
 use std::time::Duration;
 use actix_web::rt::time::sleep;
-use chrono::{TimeZone, Utc};
 use lazy_static::lazy_static;
 
 use config::Config;
@@ -48,12 +47,6 @@ async fn fetch_task(cred: LoginResponse) {
             Err(err) => {
                 warn!("Error requesting kiln data: \n{:#?}", err);
             }
-        }
-        // test get kilns from db
-        //let ts = Utc.timestamp_millis(1630692514149);
-        let kilns = db::get_updates(None).unwrap();
-        for kiln in kilns {
-            info!("got kiln with date: {}", kiln.updated_at);
         }
         // update data once per minute
         sleep(Duration::from_secs(60)).await;
