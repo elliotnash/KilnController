@@ -42,7 +42,7 @@ async fn fetch_task(cred: LoginResponse) {
                 let view_kiln = &view_res.kilns[0];
                 info!("recieved kiln update \n{:#?}", view_kiln);
                 info!("Adding update");
-                db::add_update(view_kiln);
+                db::add_update(view_kiln).unwrap();
             },
             Err(err) => {
                 warn!("Error requesting kiln data: \n{:#?}", err);

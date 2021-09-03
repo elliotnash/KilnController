@@ -1,9 +1,10 @@
 use std::path::PathBuf;
+use std::error::Error;
 use chrono::{DateTime, Utc};
 use r2d2_sqlite::SqliteConnectionManager;
 use r2d2::Pool;
 use lazy_static::lazy_static;
-use rusqlite::{params, Error};
+use rusqlite::params;
 
 use crate::model::ViewKiln;
 
@@ -23,16 +24,17 @@ lazy_static!{
     };
 }
 
-pub fn add_update(view_kiln: &ViewKiln) {
+pub fn add_update(view_kiln: &ViewKiln) -> Result<(), Box<dyn Error>> {
     let conn = POOL.get().unwrap();
     let time = view_kiln.updated_at.timestamp_millis();
     let data = serde_json::to_vec(view_kiln).unwrap();
     conn.execute("
     INSERT OR IGNORE INTO data (time, data) VALUES (?1, ?2)
-    ", params![time, data]).unwrap();
+    ", params![time, data])?;
+    Ok(())
 }
 
-pub fn get_updates(last_time: Option<DateTime<Utc>>) -> Result<Vec<ViewKiln>, Box<dyn std::error::Error>> {
+pub fn get_updates(last_time: Option<DateTime<Utc>>) -> Result<Vec<ViewKiln>, Box<dyn Error>> {
     let conn = POOL.get().unwrap();
     let mut stmt = conn.prepare("
     SELECT 
@@ -45,17 +47,7 @@ pub fn get_updates(last_time: Option<DateTime<Utc>>) -> Result<Vec<ViewKiln>, Bo
         time DESC
     LIMIT ?2
     ")?;
-    // let data = stmt.query_map(
-    //     params![
-    //         last_time.map(|t| t.timestamp_millis()).unwrap_or(0),
-    //         5
-    //     ], 
-    //     |row| {
-    //         let data: Vec<u8> = row.get(0)?;
-    //         let kiln = serde_json::from_slice::<ViewKiln>(&data);
-    //         Ok(())
-    //     }
-    // )?;
+
     let mut rows = stmt.query(params![
         last_time.map(|t| t.timestamp_millis()).unwrap_or(0),
         5
