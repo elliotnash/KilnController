@@ -44,7 +44,7 @@ build:server:linux:
     - "rustc --version && cargo --version"
     - "rm -rf target"
     - "cargo build --release --target=x86_64-unknown-linux-musl"
-    - "cp server/target/x86_64-unknown-linux-musl/release/{kiln_server,kiln_tools} ../"
+    - "cp target/x86_64-unknown-linux-musl/release/{kiln_server,kiln_tools} ../"
   artifacts:
     paths:
       - "kiln_server"
