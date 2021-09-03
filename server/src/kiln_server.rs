@@ -48,6 +48,11 @@ async fn fetch_task(cred: LoginResponse) {
                 warn!("Error requesting kiln data: \n{:#?}", err);
             }
         }
+        // test get kilns from db
+        let kilns = db::get_updates(None).unwrap();
+        for kiln in kilns {
+            info!("got kiln with date: {}", kiln.updated_at);
+        }
         // update data once per minute
         sleep(Duration::from_secs(60)).await;
     }
