@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "org.elliotnash.kilncontroller" "\0"
-            VALUE "FileDescription", "A new Flutter project." "\0"
+            VALUE "FileDescription", "Reverse engineering Genisis kiln controllers" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "client" "\0"
+            VALUE "InternalName", "kilncontroller" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2021 org.elliotnash.kilncontroller. All rights reserved." "\0"
-            VALUE "OriginalFilename", "client.exe" "\0"
-            VALUE "ProductName", "client" "\0"
+            VALUE "OriginalFilename", "KilnController.exe" "\0"
+            VALUE "ProductName", "Kiln Controller" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

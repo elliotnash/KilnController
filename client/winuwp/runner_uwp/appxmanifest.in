@@ -24,7 +24,7 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="@SHORT_NAME@.App">
       <uap:VisualElements
-        DisplayName="@SHORT_NAME@"
+        DisplayName="Kiln Controller"
         Description="@SHORT_NAME@"
         BackgroundColor="#336699"
         Square150x150Logo="Assets/Square150x150Logo.png"
