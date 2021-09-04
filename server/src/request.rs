@@ -35,8 +35,8 @@ pub async fn get_slim(cred: &model::LoginResponse, controller_id: String) -> Res
         cred.authentication_token, cred.email);
     let res = CLIENT.post(url)
         .json(&slim_req)
-        .send().await?;
-    Ok(res.json::<model::SlimResponse>().await?)
+        .send().await.unwrap();
+    Ok(res.json::<model::SlimResponse>().await.unwrap())
 }
 
 pub async fn get_view(cred: &model::LoginResponse, controller_id: String) -> Result<model::ViewResponse> {
