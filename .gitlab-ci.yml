@@ -9,9 +9,23 @@ build:client:web:
     - "cd client"
     - "flutter doctor -v"
     - "flutter build web"
+    - "cp build/web/* ../web"
   artifacts:
     paths:
-      - "client/build/web/*"
+      - "web/*"
+    expire_in: never
+
+build:client:apk:
+  image: cirrusci/flutter:dev
+  stage: build
+  script:
+    - "cd client"
+    - "flutter doctor -v"
+    - "flutter build apk"
+    - "cp build/app/outputs/apk/release/app-release.apk ../kiln-controller.apk"
+  artifacts:
+    paths:
+      - "kiln-controller.apk"
     expire_in: never
 
 build:server:mac:
