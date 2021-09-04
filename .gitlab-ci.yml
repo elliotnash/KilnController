@@ -46,12 +46,10 @@ build:client:linux:
   stage: build
   script:
     - "cd client"
-    - "flutter config --enable-windows-desktop"
-    - "flutter config --enable-windows-uwp-desktop"
-    - "flutter config --enable-macos-desktop"
+    - "apt install clang-11 --install-suggests -y"
     - "flutter config --enable-linux-desktop"
     - "flutter doctor -v"
-    - "flutter build"
+    - "flutter build linux"
   # artifacts:
   #   paths:
   #     - "kiln-controller.apk"
