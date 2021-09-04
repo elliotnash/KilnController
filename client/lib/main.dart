@@ -55,9 +55,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   var _tab = _Tabs.home;
 
-  final _controller = PageController(
-      initialPage: _Tabs.home.index
-  );
+  final _controller = PageController(initialPage: _Tabs.home.index);
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +66,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
+      // appBar: AppBar(
+      //   // Here we take the value from the MyHomePage object that was created by
+      //   // the App.build method, and use it to set our appbar title.
+      //   title: Text(widget.title),
+      // ),
       extendBody: true,
       bottomNavigationBar: SafeArea(
         child: SnakeNavigationBar.color(
-          elevation: 4,
-          shadowColor: Colors.black.withOpacity(0.5),
           behaviour: SnakeBarBehaviour.values[0],
           snakeShape: SnakeShape.rectangle,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -101,18 +97,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             });
             setState(() {
               _tab = _Tabs.values[index];
-              _controller.animateToPage(index,duration: const Duration(milliseconds: 300),curve: Curves.easeInOut);
+              _controller.animateToPage(index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
             });
           },
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.notifications),
-                label: 'home'
-            ),
+                icon: Icon(Icons.notifications), label: 'home'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.data_usage),
-                label: 'data'
-            ),
+                icon: Icon(Icons.data_usage), label: 'data'),
           ],
           selectedLabelStyle: const TextStyle(fontSize: 14),
           unselectedLabelStyle: const TextStyle(fontSize: 10),
@@ -159,17 +153,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ],
             ),
           ),
-          const Center(
-            child: Text("page 2")
-          )
-        ]
+          const Center(child: Text("page 2"))
+        ],
       ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
