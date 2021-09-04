@@ -2,6 +2,18 @@
 stages:
   - build
 
+build:client:web:
+  image: docker pull cirrusci/flutter:dev
+  stage: build
+  script:
+    - "cd client"
+    - "flutter doctor -v"
+    - "flutter build web"
+  artifacts:
+    paths:
+      - "client/build/web/*"
+    expire_in: never
+
 build:server:mac:
   image: joseluisq/rust-linux-darwin-builder:latest
   stage: build
