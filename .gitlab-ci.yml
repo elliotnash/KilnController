@@ -49,20 +49,22 @@ build:client:linux:
     - "flutter config --enable-linux-desktop"
     - "flutter doctor -v"
     - "flutter build linux"
+    - "ls build"
+    - "ls build/linux"
   # artifacts:
   #   paths:
   #     - "kiln-controller.apk"
   #   expire_in: never
 
-build:client:windows:
-  image: openpriv/flutter-desktop:windows-sdk30-fdev2.5rc
-  stage: build
-  script:
-    - "cd client"
-    - "flutter config --enable-windows-desktop"
-    - "flutter config --enable-windows-uwp-desktop"
-    - "flutter doctor -v"
-    - "flutter build"
+# build:client:windows:
+#   image: openpriv/flutter-desktop:windows-sdk30-fdev2.5rc
+#   stage: build
+#   script:
+#     - "cd client"
+#     - "flutter config --enable-windows-desktop"
+#     - "flutter config --enable-windows-uwp-desktop"
+#     - "flutter doctor -v"
+#     - "flutter build"
   # artifacts:
   #   paths:
   #     - "kiln-controller.apk"
