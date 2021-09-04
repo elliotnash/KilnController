@@ -49,8 +49,8 @@ build:client:linux:
     - "flutter config --enable-linux-desktop"
     - "flutter doctor -v"
     - "flutter build linux"
-    - "ls build"
-    - "ls build/linux"
+    - "ls build/linux/x86"
+    - "ls build/linux/x86/release"
   # artifacts:
   #   paths:
   #     - "kiln-controller.apk"
