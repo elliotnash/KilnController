@@ -49,10 +49,11 @@ build:client:linux:
     - "flutter config --enable-linux-desktop"
     - "flutter doctor -v"
     - "flutter build linux"
-    - "ls build/lib"
+    - "cp -r build/linux/x64/release/bundle ../linux"
+    - "mv ../linux/client ../linux/kilncontroller"
   artifacts:
     paths:
-      - "client/build"
+      - "linux/*"
     expire_in: never
 
 # build:client:windows:
