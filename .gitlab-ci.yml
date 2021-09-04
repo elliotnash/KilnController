@@ -3,7 +3,7 @@ stages:
   - build
 
 build:client:web:
-  image: docker pull cirrusci/flutter:dev
+  image: cirrusci/flutter:dev
   stage: build
   script:
     - "cd client"
