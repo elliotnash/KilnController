@@ -28,6 +28,31 @@ build:client:apk:
       - "kiln-controller.apk"
     expire_in: never
 
+build:client:appbundle:
+  image: cirrusci/flutter:dev
+  stage: build
+  script:
+    - "cd client"
+    - "flutter doctor -v"
+    - "flutter build appbundle"
+    - "cp build/app/outputs/bundle/release/app-release.aab ../kiln-controller.aab"
+  artifacts:
+    paths:
+      - "kiln-controller.aab"
+    expire_in: never
+
+build:client:linux:
+  image: cirrusci/flutter:dev
+  stage: build
+  script:
+    - "cd client"
+    - "flutter doctor -v"
+    - "flutter build"
+  # artifacts:
+  #   paths:
+  #     - "kiln-controller.apk"
+  #   expire_in: never
+
 build:server:mac:
   image: joseluisq/rust-linux-darwin-builder:latest
   stage: build
