@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:vibration/vibration.dart';
 
 void main() {
   runApp(const MyApp());
@@ -82,39 +83,44 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: GNav(
-              rippleColor: Colors.grey[300]!,
-              hoverColor: Colors.grey[100]!,
-              gap: 8,
-              activeColor: Colors.black,
-              iconSize: 24,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: const Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
-              color: Colors.black,
+            child: SnakeNavigationBar.color(
+              // height: 80,
+              behaviour: SnakeBarBehaviour.floating,
+              snakeShape: SnakeShape.circle,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25)),
+              ),
+              padding: const EdgeInsets.all(12),
 
-              tabs: const [
-                GButton(
-                  icon: Icons.home,
-                  text: 'Home',
-                ),
-                GButton(
-                  icon: Icons.data_usage,
-                  text: 'Data',
-                ),
-                GButton(
-                  icon: Icons.data_usage,
-                  text: 'Data',
-                )
-              ],
-              selectedIndex: _tab.index,
-              onTabChange: (index) {
+              ///configuration for SnakeNavigationBar.color
+              snakeViewColor: Colors.black,
+              selectedItemColor: Colors.red,
+              unselectedItemColor: Colors.blueGrey,
+
+              ///configuration for SnakeNavigationBar.gradient
+              // snakeViewGradient: selectedGradient,
+              // selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
+              // unselectedItemGradient: unselectedGradient,
+
+              showUnselectedLabels: true,
+              showSelectedLabels: true,
+
+              currentIndex: _tab.index,
+              onTap: (index) {
+                Vibration.vibrate(duration: 100);
                 setState(() {
                   _tab = _Tabs.values[index];
                 });
-                print(_tab);
               },
-            )
+              items: const [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.notifications), label: 'home'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.data_usage), label: 'data'),
+              ],
+              selectedLabelStyle: const TextStyle(fontSize: 14),
+              unselectedLabelStyle: const TextStyle(fontSize: 10),
+            ),
           ),
         ),
       ),
@@ -157,4 +163,4 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 }
 
-enum _Tabs { home, data, data2 }
+enum _Tabs { home, data }
