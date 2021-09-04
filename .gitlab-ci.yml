@@ -50,10 +50,10 @@ build:client:linux:
     - "flutter doctor -v"
     - "flutter build linux"
     - "ls build/lib"
-  # artifacts:
-  #   paths:
-  #     - "kiln-controller.apk"
-  #   expire_in: never
+  artifacts:
+    paths:
+      - "client/build"
+    expire_in: never
 
 # build:client:windows:
 #   image: openpriv/flutter-desktop:windows-sdk30-fdev2.5rc
