@@ -42,11 +42,10 @@ build:client:appbundle:
     expire_in: never
 
 build:client:linux:
-  image: cirrusci/flutter:dev
+  image: openpriv/flutter-desktop:linux-fdev2.5rc
   stage: build
   script:
     - "cd client"
-    - "apt install clang-11 --install-suggests -y"
     - "flutter config --enable-linux-desktop"
     - "flutter doctor -v"
     - "flutter build linux"
