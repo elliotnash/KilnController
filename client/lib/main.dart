@@ -55,6 +55,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   var _tab = _Tabs.home;
 
+  final _controller = PageController(
+      initialPage: _Tabs.home.index
+  );
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -70,90 +74,95 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         title: Text(widget.title),
       ),
       extendBody: true,
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20,
-              color: Colors.black.withOpacity(.1),
-            )
+      bottomNavigationBar: SafeArea(
+        child: SnakeNavigationBar.color(
+          elevation: 4,
+          shadowColor: Colors.black.withOpacity(0.5),
+          behaviour: SnakeBarBehaviour.values[0],
+          snakeShape: SnakeShape.rectangle,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25)),
+          ),
+
+          backgroundColor: Colors.grey[200],
+          snakeViewColor: Colors.indigo[400],
+          selectedItemColor: Colors.blueGrey[900],
+          unselectedItemColor: Colors.blueGrey[900],
+
+          //showUnselectedLabels: true,
+          showSelectedLabels: true,
+
+          currentIndex: _tab.index,
+          onTap: (index) {
+            Vibration.vibrate(duration: 50);
+            setState(() {
+              _tab = _Tabs.values[index];
+              _controller.animateToPage(index,duration: const Duration(milliseconds: 300),curve: Curves.easeInOut);
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.notifications),
+                label: 'home'
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.data_usage),
+                label: 'data'
+            ),
           ],
+          selectedLabelStyle: const TextStyle(fontSize: 14),
+          unselectedLabelStyle: const TextStyle(fontSize: 10),
         ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: SnakeNavigationBar.color(
-              // height: 80,
-              behaviour: SnakeBarBehaviour.floating,
-              snakeShape: SnakeShape.circle,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25)),
-              ),
-              padding: const EdgeInsets.all(12),
-
-              ///configuration for SnakeNavigationBar.color
-              snakeViewColor: Colors.black,
-              selectedItemColor: Colors.red,
-              unselectedItemColor: Colors.blueGrey,
-
-              ///configuration for SnakeNavigationBar.gradient
-              // snakeViewGradient: selectedGradient,
-              // selectedItemGradient: snakeShape == SnakeShape.indicator ? selectedGradient : null,
-              // unselectedItemGradient: unselectedGradient,
-
-              showUnselectedLabels: true,
-              showSelectedLabels: true,
-
-              currentIndex: _tab.index,
-              onTap: (index) {
-                Vibration.vibrate(duration: 100);
-                setState(() {
-                  _tab = _Tabs.values[index];
-                });
-              },
-              items: const [
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.notifications), label: 'home'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.data_usage), label: 'data'),
+      ),
+      body: PageView(
+        controller: _controller,
+        onPageChanged: (index) {
+          if (_tab.index != index) {
+            // Then we've swiped, as the _tab index would already be updated
+            // if we had changed tabs with the navbar. Vibrate
+            Vibration.vibrate(duration: 50);
+          }
+          setState(() {
+            _tab = _Tabs.values[index];
+          });
+        },
+        children: <Widget>[
+          Center(
+            child: Column(
+              // Column is also a layout widget. It takes a list of children and
+              // arranges them vertically. By default, it sizes itself to fit its
+              // children horizontally, and tries to be as tall as its parent.
+              //
+              // Invoke "debug painting" (press "p" in the console, choose the
+              // "Toggle Debug Paint" action from the Flutter Inspector in Android
+              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+              // to see the wireframe for each widget.
+              //
+              // Column has various properties to control how it sizes itself and
+              // how it positions its children. Here we use mainAxisAlignment to
+              // center the children vertically; the main axis here is the vertical
+              // axis because Columns are vertical (the cross axis would be
+              // horizontal).
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  'You have pushed the button this many times:',
+                ),
+                Text(
+                  '$_counter',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
               ],
-              selectedLabelStyle: const TextStyle(fontSize: 14),
-              unselectedLabelStyle: const TextStyle(fontSize: 10),
             ),
           ),
-        ),
+          const Center(
+            child: Text("page 2")
+          )
+        ]
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
