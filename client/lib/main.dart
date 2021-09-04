@@ -96,7 +96,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
           currentIndex: _tab.index,
           onTap: (index) {
-            Vibration.vibrate(duration: 50);
+            Vibration.hasVibrator().then((hasVibrator) {
+              if (hasVibrator!) Vibration.vibrate(duration: 50);
+            });
             setState(() {
               _tab = _Tabs.values[index];
               _controller.animateToPage(index,duration: const Duration(milliseconds: 300),curve: Curves.easeInOut);
