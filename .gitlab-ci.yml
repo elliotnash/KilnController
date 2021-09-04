@@ -9,7 +9,7 @@ build:client:web:
     - "cd client"
     - "flutter doctor -v"
     - "flutter build web"
-    - "cp build/web/* ../web"
+    - "cp -r build/web .."
   artifacts:
     paths:
       - "web/*"
