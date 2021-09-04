@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:vibration/vibration.dart';
+import 'kiln_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +14,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Kiln Controller',
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: KilnColors.cyan,
       ),
       home: const Home(title: 'Kiln Controller'),
     );
@@ -66,11 +67,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      // appBar: AppBar(
-      //   // Here we take the value from the MyHomePage object that was created by
-      //   // the App.build method, and use it to set our appbar title.
-      //   title: Text(widget.title),
-      // ),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))
+        ),
+        //backgroundColor: KilnColors.cyan.withAlpha(0x),
+
+      ),
       extendBody: true,
       bottomNavigationBar: SafeArea(
         child: SnakeNavigationBar.color(
@@ -83,11 +91,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           ),
 
           backgroundColor: Colors.grey[200],
-          snakeViewColor: Colors.indigo[400],
+          snakeViewColor: KilnColors.cyan,
           selectedItemColor: Colors.blueGrey[900],
           unselectedItemColor: Colors.blueGrey[900],
 
-          //showUnselectedLabels: true,
           showSelectedLabels: true,
 
           currentIndex: _tab.index,
@@ -153,7 +160,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               ],
             ),
           ),
-          const Center(child: Text("page 2"))
+          const Center(child: Text("page 2")),
         ],
       ),
     );
