@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:vibration/vibration.dart';
 import 'kiln_colors.dart';
@@ -7,6 +8,10 @@ import 'views/current_view.dart';
 import 'views/chart_view.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent, // transparent status bar
+  ));
   runApp(const MyApp());
 }
 
@@ -30,22 +35,21 @@ class MyApp extends StatelessWidget {
         backgroundColor: KilnColors.magnolia,
       ),
       darkTheme: ThemeData(
-        colorScheme: const ColorScheme(
-          brightness: Brightness.dark,
-          primary: KilnColors.cyan,
-          primaryVariant: KilnColors.cyan,
-          secondary: KilnColors.rhythm,
-          secondaryVariant: KilnColors.rhythm,
-          surface: KilnColors.jet,
-          background: KilnColors.black,
-          error: KilnColors.orange,
-          onPrimary: KilnColors.magnolia,
-          onSecondary: KilnColors.magnolia,
-          onSurface: KilnColors.magnolia,
-          onBackground: KilnColors.magnolia,
-          onError: KilnColors.magnolia,
-        )
-      ),
+          colorScheme: const ColorScheme(
+        brightness: Brightness.dark,
+        primary: KilnColors.cyan,
+        primaryVariant: KilnColors.cyan,
+        secondary: KilnColors.rhythm,
+        secondaryVariant: KilnColors.rhythm,
+        surface: KilnColors.jet,
+        background: KilnColors.black,
+        error: KilnColors.orange,
+        onPrimary: KilnColors.magnolia,
+        onSecondary: KilnColors.magnolia,
+        onSurface: KilnColors.magnolia,
+        onBackground: KilnColors.magnolia,
+        onError: KilnColors.magnolia,
+      )),
       themeMode: ThemeMode.system,
       routes: {
         '/': (context) {
