@@ -11,6 +11,7 @@ import 'views/chart_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.transparent, // transparent nav bar
     statusBarColor: Colors.transparent, // transparent status bar
   ));
   runApp(const MyApp());
