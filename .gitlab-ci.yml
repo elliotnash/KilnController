@@ -56,19 +56,21 @@ build:client:linux:
       - "linux/*"
     expire_in: never
 
-# build:client:windows:
-#   image: openpriv/flutter-desktop:windows-sdk30-fdev2.5rc
-#   stage: build
-#   script:
-#     - "cd client"
-#     - "flutter config --enable-windows-desktop"
-#     - "flutter config --enable-windows-uwp-desktop"
-#     - "flutter doctor -v"
-#     - "flutter build"
-  # artifacts:
-  #   paths:
-  #     - "kiln-controller.apk"
-  #   expire_in: never
+build:client:windows:
+  image: openpriv/flutter-desktop:windows-sdk30-fdev2.5rc
+  stage: build
+  tags: 
+    - windows
+  script:
+    - "cd client"
+    - "flutter config --enable-windows-desktop"
+    - "flutter config --enable-windows-uwp-desktop"
+    - "flutter doctor -v"
+    - "flutter build"
+  artifacts:
+    paths:
+      - "client/build"
+    expire_in: never
 
 build:server:mac:
   image: joseluisq/rust-linux-darwin-builder:latest
