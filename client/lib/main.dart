@@ -153,12 +153,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         ),
       ),
       drawer: SizedBox(
-        width: 250,
+        width: 300,
         child: ClipPath(
           child: Stack(
             children: [
               BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
                 child:
                     Container(color: theme.colorScheme.surface.withAlpha(0xAA)),
               ),
@@ -167,22 +167,27 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 padding: EdgeInsets.zero,
                 children: [
                   const DrawerHeader(
-                    child: Text('Drawer Header'),
+                    child: Text('Account'),
                   ),
-                  ListTile(
-                    title: const Text('Item 1'),
-                    onTap: () {
-                      // Update the state of the app.
-                      // ...
-                      print("you tapped 1");
+                  MaterialButton(
+                    onPressed: () {
+                      print("Settings pressed");
                     },
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    child: const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Settings"),
+                    ),
                   ),
-                  ListTile(
-                    title: const Text('Item 2'),
-                    onTap: () {
-                      // Update the state of the app.
-                      // ...
+                  MaterialButton(
+                    onPressed: () {
+                      print("Settings pressed");
                     },
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    child: const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Settings"),
+                    ),
                   ),
                 ],
               ),
