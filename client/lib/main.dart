@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -70,21 +71,13 @@ class MyApp extends StatelessWidget {
           return const Home(title: "Kiln Controller");
         },
       },
+      initialRoute: '/',
     );
   }
 }
 
 class Home extends StatefulWidget {
   const Home({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -100,14 +93,25 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final query = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(widget.title),
         elevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
+        backgroundColor: Colors.transparent,
+        flexibleSpace: ClipRRect(
+          borderRadius:
+              const BorderRadius.vertical(bottom: Radius.circular(15)),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              color: query.platformBrightness == Brightness.light
+                  ? theme.colorScheme.primary.withAlpha(0xAA)
+                  : theme.colorScheme.surface.withAlpha(0xAA),
+            ),
+          ),
         ),
       ),
       extendBody: true,
