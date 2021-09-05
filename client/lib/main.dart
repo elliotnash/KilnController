@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:vibration/vibration.dart';
 import 'kiln_colors.dart';
+import 'consts.dart';
 
 import 'views/current_view.dart';
 import 'views/chart_view.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
     //   home: const Home(title: 'Kiln Controller'),
     // );
     return MaterialApp(
-      title: 'Kiln Controller',
+      title: kTitle,
       theme: ThemeData(
         colorScheme: ColorScheme(
           brightness: Brightness.light,
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       routes: {
         '/': (context) {
-          return const Home(title: "Kiln Controller");
+          return const Home(title: kTitle);
         },
       },
       initialRoute: '/',
@@ -145,9 +146,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           },
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.notifications), label: 'home'),
+                icon: Icon(Icons.notifications), label: kHome),
             BottomNavigationBarItem(
-                icon: Icon(Icons.data_usage), label: 'data'),
+                icon: Icon(Icons.data_usage), label: kData),
           ],
           selectedLabelStyle: const TextStyle(fontSize: 14),
         ),
@@ -171,7 +172,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      print("Settings pressed");
                     },
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     child: const Align(
@@ -181,12 +181,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      print("Log Out pressed");
                     },
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     child: const Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("Log Out"),
+                      child: Text(kLogOut),
                     ),
                   ),
                 ],
