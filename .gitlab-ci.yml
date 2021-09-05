@@ -68,10 +68,11 @@ build:client:windows:
     - "flutter config --enable-windows-desktop"
     - "flutter config --enable-windows-uwp-desktop"
     - "flutter doctor -v"
-    - "flutter build"
+    - "flutter build windows"
+    - 'Copy-Item -Path "build\windows\runner\Release\" -Destination "..\windows" -Recurse'
   artifacts:
     paths:
-      - "client/build"
+      - "windows/*"
     expire_in: never
 
 build:server:mac:
