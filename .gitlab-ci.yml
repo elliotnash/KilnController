@@ -61,7 +61,8 @@ build:client:windows:
   stage: build
   tags: 
     - windows
-    - shell
+    - powershell
+    - flutter
   script:
     - "cd client"
     - "flutter config --enable-windows-desktop"
