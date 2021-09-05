@@ -81,8 +81,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: theme.colorScheme.background,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(widget.title),
@@ -99,10 +100,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(25)),
           ),
-          backgroundColor: Theme.of(context).primaryColor,
-          snakeViewColor: KilnColors.cyan,
-          selectedItemColor: Colors.blueGrey[900],
-          unselectedItemColor: Colors.blueGrey[900],
+          backgroundColor: theme.colorScheme.surface,
+          snakeViewColor: theme.colorScheme.primary,
+          selectedItemColor: theme.colorScheme.onPrimary,
+          unselectedItemColor: theme.colorScheme.onSurface,
           showSelectedLabels: true,
           currentIndex: _tab.index,
           onTap: (index) {
