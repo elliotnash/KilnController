@@ -80,7 +80,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
               color: query.platformBrightness == Brightness.light
-                  ? theme.colorScheme.primary.withAlpha(0xAA)
+                  ? theme.colorScheme.primaryVariant.withAlpha(0xAA)
                   : theme.colorScheme.surface.withAlpha(0xAA),
             ),
           ),
