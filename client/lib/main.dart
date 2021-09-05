@@ -121,47 +121,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           selectedLabelStyle: const TextStyle(fontSize: 14),
         ),
       ),
-      drawer: SizedBox(
-        width: 300,
-        child: ClipPath(
-          child: Stack(
-            children: [
-              BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
-                child:
-                    Container(color: theme.colorScheme.surface.withAlpha(0xAA)),
-              ),
-              ListView(
-                // Important: Remove any padding from the ListView.
-                padding: EdgeInsets.zero,
-                children: [
-                  const DrawerHeader(
-                    child: Text('Account'),
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                    },
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    child: const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text("Settings"),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                    },
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    child: const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(kLogOut),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: const FrostDrawer(),
       drawerScrimColor: Colors.transparent,
       body: PageView(
         controller: _controller,
@@ -179,6 +139,73 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           CurrentView(),
           ChartView(),
         ],
+      ),
+    );
+  }
+}
+
+class FrostDrawer extends StatefulWidget {
+  const FrostDrawer({Key? key}) : super(key: key);
+
+  @override
+  _FrostDrawerState createState() => _FrostDrawerState();
+}
+
+class _FrostDrawerState extends State<FrostDrawer> {
+
+  @override
+  void initState() {
+    super.initState();
+    Vibration.vibrate(duration: 50);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return SizedBox(
+      width: 300,
+      child: ClipPath(
+        child: Stack(
+          children: [
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
+              child:
+                  Container(color: theme.colorScheme.surface.withAlpha(0xAA)),
+            ),
+            ListView(
+              // Important: Remove any padding from the ListView.
+              padding: EdgeInsets.zero,
+              children: [
+                const DrawerHeader(
+                  child: Text('Account'),
+                ),
+                MaterialButton(
+                  onPressed: () {
+                  },
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Settings"),
+                  ),
+                ),
+                MaterialButton(
+                  onPressed: () {
+                  },
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(kLogOut),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
