@@ -181,12 +181,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      print("Settings pressed");
+                      print("Log Out pressed");
                     },
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     child: const Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("Settings"),
+                      child: Text("Log Out"),
                     ),
                   ),
                 ],
