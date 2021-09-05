@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:vibration/vibration.dart';
-import 'package:system_theme/system_theme.dart';
 import 'kiln_colors.dart';
 
 import 'views/current_view.dart';
 import 'views/chart_view.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await SystemTheme.accentInstance.load();
   runApp(const MyApp());
 }
 
@@ -19,12 +16,42 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // return MaterialApp(
+    //   title: 'Kiln Controller',
+    //   theme: ThemeData(
+    //     primarySwatch: KilnColors.cyan,
+    //   ),
+    //   home: const Home(title: 'Kiln Controller'),
+    // );
     return MaterialApp(
       title: 'Kiln Controller',
       theme: ThemeData(
         primarySwatch: KilnColors.cyan,
+        backgroundColor: KilnColors.magnolia,
       ),
-      home: const Home(title: 'Kiln Controller'),
+      darkTheme: ThemeData(
+        colorScheme: const ColorScheme(
+          brightness: Brightness.dark,
+          primary: KilnColors.cyan,
+          primaryVariant: KilnColors.cyan,
+          secondary: KilnColors.rhythm,
+          secondaryVariant: KilnColors.rhythm,
+          surface: KilnColors.jet,
+          background: KilnColors.black,
+          error: KilnColors.orange,
+          onPrimary: KilnColors.magnolia,
+          onSecondary: KilnColors.magnolia,
+          onSurface: KilnColors.magnolia,
+          onBackground: KilnColors.magnolia,
+          onError: KilnColors.magnolia,
+        )
+      ),
+      themeMode: ThemeMode.system,
+      routes: {
+        '/': (context) {
+          return const Home(title: "Kiln Controller");
+        },
+      },
     );
   }
 }
@@ -54,22 +81,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
         elevation: 0,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))),
-        //backgroundColor: KilnColors.cyan.withAlpha(0x),
       ),
       extendBody: true,
       bottomNavigationBar: SafeArea(
@@ -80,7 +99,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(25)),
           ),
-          backgroundColor: Colors.grey[200],
+          backgroundColor: Theme.of(context).primaryColor,
           snakeViewColor: KilnColors.cyan,
           selectedItemColor: Colors.blueGrey[900],
           unselectedItemColor: Colors.blueGrey[900],
@@ -104,7 +123,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 icon: Icon(Icons.data_usage), label: 'data'),
           ],
           selectedLabelStyle: const TextStyle(fontSize: 14),
-          unselectedLabelStyle: const TextStyle(fontSize: 10),
         ),
       ),
       body: SafeArea(

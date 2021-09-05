@@ -67,6 +67,23 @@ class KilnColors {
     },
   );
 
+  static const _rhythmPrimaryValue = 0xFF7F7CAF;
+  static const rhythm = MaterialColor(
+    _rhythmPrimaryValue,
+    <int, Color>{
+      50: Color(0xFFF0EFF5),
+      100: Color(0xFFD9D8E7),
+      200: Color(0xFFBFBED7),
+      300: Color(0xFFA5A3C7),
+      400: Color(0xFF9290BB),
+      500: Color(_rhythmPrimaryValue),
+      600: Color(0xFF7774A8),
+      700: Color(0xFF6C699F),
+      800: Color(0xFF625F96),
+      900: Color(0xFF4F4C86),
+    },
+  );
+
   static const _orangePrimaryValue = 0xFFFC5130;
   static const orange = MaterialColor(
     _orangePrimaryValue,
