@@ -34,40 +34,8 @@ class MyApp extends StatelessWidget {
     // );
     return MaterialApp(
       title: kTitle,
-      theme: ThemeData(
-        colorScheme: ColorScheme(
-          brightness: Brightness.light,
-          primary: KilnColors.cyan,
-          primaryVariant: KilnColors.cyan[900]!,
-          secondary: KilnColors.rhythm,
-          secondaryVariant: KilnColors.rhythm[900]!,
-          surface: KilnColors.gainsboro,
-          background: KilnColors.gainsboro[50]!,
-          error: KilnColors.orange,
-          onPrimary: KilnColors.black,
-          onSecondary: KilnColors.black,
-          onSurface: KilnColors.black,
-          onBackground: KilnColors.black,
-          onError: KilnColors.black,
-        ),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme(
-          brightness: Brightness.dark,
-          primary: KilnColors.cyan,
-          primaryVariant: KilnColors.cyan[900]!,
-          secondary: KilnColors.rhythm,
-          secondaryVariant: KilnColors.rhythm[900]!,
-          surface: KilnColors.jet,
-          background: KilnColors.black,
-          error: KilnColors.orange,
-          onPrimary: KilnColors.gainsboro[50]!,
-          onSecondary: KilnColors.gainsboro[50]!,
-          onSurface: KilnColors.gainsboro[50]!,
-          onBackground: KilnColors.gainsboro[50]!,
-          onError: KilnColors.gainsboro[50]!,
-        ),
-      ),
+      theme: KilnColors.lightTheme,
+      darkTheme: KilnColors.darkTheme,
       themeMode: ThemeMode.system,
       routes: {
         '/': (context) {

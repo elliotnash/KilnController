@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class KilnColors {
   // prevent initialization;
@@ -104,6 +105,43 @@ class KilnColors {
       800: Color(0xFFFB371E),
       900: Color(0xFFFA2713),
     },
+  );
+
+  static final lightTheme = ThemeData(
+    fontFamily: GoogleFonts.dosis(fontWeight: FontWeight.w500).fontFamily,
+    textTheme: const TextTheme(
+      bodyText2: TextStyle(fontSize: 16),
+      headline6: TextStyle(fontSize: 25),
+    ),
+    primaryColor: KilnColors.cyan,
+    colorScheme: ColorScheme(
+      brightness: Brightness.light,
+      primary: KilnColors.cyan,
+      primaryVariant: KilnColors.cyan[900]!,
+      secondary: KilnColors.rhythm,
+      secondaryVariant: KilnColors.rhythm[900]!,
+      surface: KilnColors.gainsboro,
+      background: KilnColors.gainsboro[50]!,
+      error: KilnColors.orange,
+      onPrimary: KilnColors.black,
+      onSecondary: KilnColors.black,
+      onSurface: KilnColors.black,
+      onBackground: KilnColors.black,
+      onError: KilnColors.black,
+    ),
+  );
+
+  static final darkTheme = lightTheme.copyWith(
+    colorScheme: lightTheme.colorScheme.copyWith(
+      brightness: Brightness.dark,
+      surface: KilnColors.jet,
+      background: KilnColors.black,
+      onPrimary: KilnColors.gainsboro[50]!,
+      onSecondary: KilnColors.gainsboro[50]!,
+      onSurface: KilnColors.gainsboro[50]!,
+      onBackground: KilnColors.gainsboro[50]!,
+      onError: KilnColors.gainsboro[50]!,
+    ),
   );
 
 }
