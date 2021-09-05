@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       darkTheme: ThemeData(
-        colorScheme: const ColorScheme(
+        colorScheme: ColorScheme(
           brightness: Brightness.dark,
           primary: KilnColors.cyan,
           primaryVariant: KilnColors.cyan,
@@ -57,11 +57,11 @@ class MyApp extends StatelessWidget {
           surface: KilnColors.jet,
           background: KilnColors.black,
           error: KilnColors.orange,
-          onPrimary: KilnColors.gainsboro,
-          onSecondary: KilnColors.gainsboro,
-          onSurface: KilnColors.gainsboro,
-          onBackground: KilnColors.gainsboro,
-          onError: KilnColors.gainsboro,
+          onPrimary: KilnColors.gainsboro[50]!,
+          onSecondary: KilnColors.gainsboro[50]!,
+          onSurface: KilnColors.gainsboro[50]!,
+          onBackground: KilnColors.gainsboro[50]!,
+          onError: KilnColors.gainsboro[50]!,
         ),
       ),
       themeMode: ThemeMode.system,
