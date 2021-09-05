@@ -38,15 +38,20 @@ class KilnColors {
     },
   );
 
-  static const _magnoliaPrimaryValue = 0xFFFFFAFF;
-  static const magnolia = MaterialColor(
-    _magnoliaPrimaryValue,
+  static const _gainsboroPrimaryValue = 0xFFDBD9E0;
+  static const gainsboro = MaterialColor(
+    _gainsboroPrimaryValue,
     <int, Color>{
-      100: Color(0xFFFFFEFF),
-      300: Color(0xFFFFFCFF),
-      500: Color(_magnoliaPrimaryValue),
-      700: Color(0xFFFFF9FF),
-      900: Color(0xFFFFF6FF),
+      50: Color(0xFFFBFAFB),
+      100: Color(0xFFF4F4F6),
+      200: Color(0xFFEDECF0),
+      300: Color(0xFFE6E4E9),
+      400: Color(0xFFE0DFE5),
+      500: Color(_gainsboroPrimaryValue),
+      600: Color(0xFFD7D5DC),
+      700: Color(0xFFD2CFD8),
+      800: Color(0xFFCDCAD3),
+      900: Color(0xFFC4C0CB),
     },
   );
 
