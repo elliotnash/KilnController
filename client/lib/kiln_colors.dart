@@ -107,12 +107,15 @@ class KilnColors {
     },
   );
 
+  static const _textTheme = TextTheme(
+    bodyText2: TextStyle(fontSize: 18),
+    button: TextStyle(fontSize: 16),
+    headline6: TextStyle(fontSize: 25),
+  );
+
   static final lightTheme = ThemeData(
     fontFamily: GoogleFonts.dosis(fontWeight: FontWeight.w500).fontFamily,
-    textTheme: const TextTheme(
-      bodyText2: TextStyle(fontSize: 16),
-      headline6: TextStyle(fontSize: 25),
-    ),
+    textTheme: _textTheme,
     primaryColor: KilnColors.cyan,
     colorScheme: ColorScheme(
       brightness: Brightness.light,
@@ -131,7 +134,9 @@ class KilnColors {
     ),
   );
 
-  static final darkTheme = lightTheme.copyWith(
+  static final darkTheme = ThemeData(
+    fontFamily: GoogleFonts.dosis(fontWeight: FontWeight.w500).fontFamily,
+    textTheme: _textTheme,
     colorScheme: lightTheme.colorScheme.copyWith(
       brightness: Brightness.dark,
       surface: KilnColors.jet,
