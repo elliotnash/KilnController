@@ -37,9 +37,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme(
           brightness: Brightness.light,
           primary: KilnColors.cyan,
-          primaryVariant: KilnColors.cyan,
+          primaryVariant: KilnColors.cyan[900]!,
           secondary: KilnColors.rhythm,
-          secondaryVariant: KilnColors.rhythm,
+          secondaryVariant: KilnColors.rhythm[900]!,
           surface: KilnColors.gainsboro,
           background: KilnColors.gainsboro[50]!,
           error: KilnColors.orange,
@@ -54,9 +54,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme(
           brightness: Brightness.dark,
           primary: KilnColors.cyan,
-          primaryVariant: KilnColors.cyan,
+          primaryVariant: KilnColors.cyan[900]!,
           secondary: KilnColors.rhythm,
-          secondaryVariant: KilnColors.rhythm,
+          secondaryVariant: KilnColors.rhythm[900]!,
           surface: KilnColors.jet,
           background: KilnColors.black,
           error: KilnColors.orange,
@@ -101,6 +101,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(widget.title),
+        centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
         flexibleSpace: ClipRRect(
@@ -151,6 +152,45 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           selectedLabelStyle: const TextStyle(fontSize: 14),
         ),
       ),
+      drawer: SizedBox(
+        width: 250,
+        child: ClipPath(
+          child: Stack(
+            children: [
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child:
+                    Container(color: theme.colorScheme.surface.withAlpha(0xAA)),
+              ),
+              ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: [
+                  const DrawerHeader(
+                    child: Text('Drawer Header'),
+                  ),
+                  ListTile(
+                    title: const Text('Item 1'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      print("you tapped 1");
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Item 2'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      drawerScrimColor: Colors.transparent,
       body: PageView(
         controller: _controller,
         onPageChanged: (index) {
