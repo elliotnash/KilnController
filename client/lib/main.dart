@@ -149,24 +149,22 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           selectedLabelStyle: const TextStyle(fontSize: 14),
         ),
       ),
-      body: SafeArea(
-        child: PageView(
-          controller: _controller,
-          onPageChanged: (index) {
-            if (_tab.index != index) {
-              // Then we've swiped, as the _tab index would already be updated
-              // if we had changed tabs with the navbar. Vibrate
-              Vibration.vibrate(duration: 50);
-            }
-            setState(() {
-              _tab = _Tabs.values[index];
-            });
-          },
-          children: const <Widget>[
-            CurrentView(),
-            ChartView(),
-          ],
-        ),
+      body: PageView(
+        controller: _controller,
+        onPageChanged: (index) {
+          if (_tab.index != index) {
+            // Then we've swiped, as the _tab index would already be updated
+            // if we had changed tabs with the navbar. Vibrate
+            Vibration.vibrate(duration: 50);
+          }
+          setState(() {
+            _tab = _Tabs.values[index];
+          });
+        },
+        children: const <Widget>[
+          CurrentView(),
+          ChartView(),
+        ],
       ),
     );
   }
