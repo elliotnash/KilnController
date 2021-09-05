@@ -62,7 +62,7 @@ build:client:windows:
   tags: 
     - windows
     - powershell
-    - flutter
+    - flutter-dev
   script:
     - "cd client"
     - "flutter config --enable-windows-desktop"
