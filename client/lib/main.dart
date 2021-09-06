@@ -13,28 +13,26 @@ void main() async {
     systemNavigationBarColor: Colors.transparent, // transparent nav bar
     statusBarColor: Colors.transparent, // transparent status bar
   ));
-  runApp(const MyApp());
+  runApp(const KilnController());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class KilnController extends StatefulWidget {
+  const KilnController({Key? key}) : super(key: key);
 
+  @override
+  _KilnControllerState createState() => _KilnControllerState();
+}
+
+class _KilnControllerState extends State<KilnController> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // return MaterialApp(
-    //   title: 'Kiln Controller',
-    //   theme: ThemeData(
-    //     primarySwatch: KilnColors.cyan,
-    //   ),
-    //   home: const Home(title: 'Kiln Controller'),
-    // );
     return MaterialApp(
       title: kTitle,
       theme: KilnColors.lightTheme,
       darkTheme: KilnColors.darkTheme,
       themeMode: ThemeMode.system,
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
         '/': (context) {
           return const Home(title: kTitle);
