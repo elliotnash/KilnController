@@ -32,15 +32,54 @@ class _KilnControllerState extends State<KilnController> {
       theme: KilnColors.lightTheme,
       darkTheme: KilnColors.darkTheme,
       themeMode: ThemeMode.system,
-      initialRoute: '/',
+      initialRoute: Login.route,
       routes: {
-        '/': (context) {
-          return const Home(title: kTitle);
-        },
-        '/login': (context) {
-          return const Login(title: kTitle);
-        }
+        Login.route: (context) => const Login(),
+        Home.route: (context) => const Home(),
       },
     );
   }
 }
+
+// class RouteGenerator {
+//   static Route<dynamic> generateRoute(RouteSettings settings) {
+//     switch (settings.name) {
+//       case Home.route:
+//         return _GeneratePageRoute(
+//             widget: const Home(), routeName: settings.name!);
+//       case Login.route:
+//         return _GeneratePageRoute(
+//             widget: const Login(), routeName: settings.name!);
+//       // TODO add 404 route
+//       default:
+//         return _GeneratePageRoute(
+//             widget: const Login(), routeName: settings.name!);
+//     }
+//   }
+// }
+//
+// class _GeneratePageRoute extends PageRouteBuilder {
+//   final Widget widget;
+//   final String routeName;
+//   _GeneratePageRoute({required this.widget, required this.routeName})
+//       : super(
+//             settings: RouteSettings(name: routeName),
+//             pageBuilder: (BuildContext context, Animation<double> animation,
+//                 Animation<double> secondaryAnimation) {
+//               return widget;
+//             },
+//             transitionDuration: const Duration(milliseconds: 500),
+//             transitionsBuilder: (BuildContext context,
+//                 Animation<double> animation,
+//                 Animation<double> secondaryAnimation,
+//                 Widget child) {
+//               return SlideTransition(
+//                 textDirection: TextDirection.rtl,
+//                 position: Tween<Offset>(
+//                   begin: const Offset(1.0, 0.0),
+//                   end: Offset.zero,
+//                 ).animate(animation),
+//                 child: child,
+//               );
+//             });
+// }

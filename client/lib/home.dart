@@ -9,10 +9,9 @@ import 'views/current_view.dart';
 import 'views/chart_view.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key, required this.title}) : super(key: key);
+  static const route = "/home";
 
-  final String title;
-
+  const Home({Key? key}) : super(key: key);
   @override
   State<Home> createState() => _HomeState();
 }
@@ -30,13 +29,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       backgroundColor: theme.colorScheme.background,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text(kTitle),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
         flexibleSpace: ClipRRect(
           borderRadius:
-          const BorderRadius.vertical(bottom: Radius.circular(15)),
+              const BorderRadius.vertical(bottom: Radius.circular(15)),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
@@ -76,8 +75,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.notifications), label: kHome),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.data_usage), label: kData),
+            BottomNavigationBarItem(icon: Icon(Icons.data_usage), label: kData),
           ],
           selectedLabelStyle: const TextStyle(fontSize: 14),
         ),
@@ -113,7 +111,6 @@ class FrostDrawer extends StatefulWidget {
 }
 
 class _FrostDrawerState extends State<FrostDrawer> {
-
   @override
   void initState() {
     super.initState();
@@ -136,7 +133,7 @@ class _FrostDrawerState extends State<FrostDrawer> {
             BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
               child:
-              Container(color: theme.colorScheme.surface.withAlpha(0xAA)),
+                  Container(color: theme.colorScheme.surface.withAlpha(0xAA)),
             ),
             ListView(
               // Important: Remove any padding from the ListView.
@@ -146,18 +143,18 @@ class _FrostDrawerState extends State<FrostDrawer> {
                   child: Text('Account'),
                 ),
                 MaterialButton(
-                  onPressed: () {
-                  },
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  onPressed: () {},
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: const Align(
                     alignment: Alignment.centerLeft,
                     child: Text("Settings"),
                   ),
                 ),
                 MaterialButton(
-                  onPressed: () {
-                  },
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  onPressed: () {},
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(kLogOut),

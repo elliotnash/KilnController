@@ -1,18 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'package:vibration/vibration.dart';
-import 'consts.dart';
-
-import 'views/current_view.dart';
-import 'views/chart_view.dart';
+import 'package:kilncontroller/consts.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key, required this.title}) : super(key: key);
+  static const route = "/login";
 
-  final String title;
-
+  const Login({Key? key}) : super(key: key);
   @override
   State<Login> createState() => _LoginState();
 }
@@ -27,7 +21,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       backgroundColor: theme.colorScheme.background,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text(kTitle),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
