@@ -4,6 +4,7 @@ import 'kiln_colors.dart';
 import 'consts.dart';
 
 import 'home.dart';
+import 'login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,11 +34,14 @@ class MyApp extends StatelessWidget {
       theme: KilnColors.lightTheme,
       darkTheme: KilnColors.darkTheme,
       themeMode: ThemeMode.system,
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/': (context) {
           return const Home(title: kTitle);
         },
+        '/login': (context) {
+          return const Login(title: kTitle);
+        }
       },
     );
   }
