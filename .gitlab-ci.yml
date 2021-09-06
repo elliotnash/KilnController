@@ -13,7 +13,7 @@ build:client:web:
   artifacts:
     paths:
       - "web/*"
-    expire_in: never
+    expire_in: 1 week
 
 build:client:apk:
   image: cirrusci/flutter:dev
@@ -26,7 +26,7 @@ build:client:apk:
   artifacts:
     paths:
       - "kiln-controller.apk"
-    expire_in: never
+    expire_in: 1 week
 
 build:client:appbundle:
   image: cirrusci/flutter:dev
@@ -39,7 +39,7 @@ build:client:appbundle:
   artifacts:
     paths:
       - "kiln-controller.aab"
-    expire_in: never
+    expire_in: 1 week
 
 build:client:linux:
   image: openpriv/flutter-desktop:linux-fdev2.5rc
@@ -54,7 +54,7 @@ build:client:linux:
   artifacts:
     paths:
       - "linux/*"
-    expire_in: never
+    expire_in: 1 week
 
 build:client:windows:
   image: openpriv/flutter-desktop:windows-sdk30-fdev2.5rc
@@ -73,7 +73,7 @@ build:client:windows:
   artifacts:
     paths:
       - "windows/*"
-    expire_in: never
+    expire_in: 1 week
 
 build:server:mac:
   image: joseluisq/rust-linux-darwin-builder:latest
@@ -88,7 +88,7 @@ build:server:mac:
     paths:
       - "kiln_server"
       - "kiln_tools"
-    expire_in: never
+    expire_in: 1 week
 
 build:server:linux:
   image: joseluisq/rust-linux-darwin-builder:latest
@@ -103,4 +103,4 @@ build:server:linux:
     paths:
       - "kiln_server"
       - "kiln_tools"
-    expire_in: never
+    expire_in: 1 week
