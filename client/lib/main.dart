@@ -115,8 +115,12 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
+    final theme = Theme.of(context);
+    return Container(
+      color: theme.colorScheme.background,
+      child: const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
