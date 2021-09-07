@@ -35,6 +35,7 @@ class _KilnControllerState extends State<KilnController> {
       theme: KilnColors.lightTheme,
       darkTheme: KilnColors.darkTheme,
       themeMode: ThemeMode.system,
+      mode: VRouterMode.history,
       routes: [
         VWidget(path: '/', widget: const LandingPage()),
         VWidget(path: '/login', widget: const Login()),
