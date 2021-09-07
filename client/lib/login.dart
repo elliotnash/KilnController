@@ -26,6 +26,11 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     passwordFocus.dispose();
   }
 
+  void _submit() {
+    print("submit pressed. email: ${emailCtl.value.text}, "
+        "password: ${passwordCtl.value.text}");
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -73,6 +78,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       autofocus: true,
                       controller: emailCtl,
                       focusNode: emailFocus,
+                      onSubmitted: (_) => passwordFocus.requestFocus(),
                     ),
                   ),
                   Padding(
@@ -84,6 +90,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       type: TextFieldType.password,
                       controller: passwordCtl,
                       focusNode: passwordFocus,
+                      onSubmitted: (_) => _submit(),
                     ),
                   ),
                   Padding(
@@ -108,10 +115,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         ),
                         child: Text(kSubmit),
                       ),
-                      onPressed: () {
-                        print("submit pressed. email: ${emailCtl.value.text}, "
-                            "password: ${passwordCtl.value.text}");
-                      },
+                      onPressed: () => _submit(),
                     ),
                   ),
                 ],
@@ -133,6 +137,7 @@ class KilnTextField extends StatelessWidget {
     this.autofocus = false,
     this.controller,
     this.focusNode,
+    this.onSubmitted,
   }) : super(key: key);
 
   final String label;
@@ -141,6 +146,7 @@ class KilnTextField extends StatelessWidget {
   final bool autofocus;
   final TextEditingController? controller;
   final FocusNode? focusNode;
+  final ValueChanged<String>? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -153,6 +159,7 @@ class KilnTextField extends StatelessWidget {
       autofocus: autofocus,
       controller: controller,
       focusNode: focusNode,
+      onSubmitted: onSubmitted,
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
