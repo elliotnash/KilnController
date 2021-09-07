@@ -20,7 +20,7 @@ build:client:apk:
   stage: build
   script:
     - "cd client"
-    - "apt install android-sdk"
+    - "sudo apt install android-sdk -y"
     - "flutter doctor -v"
     - "flutter build apk"
     - "cp build/app/outputs/apk/release/app-release.apk ../kiln-controller.apk"
@@ -34,7 +34,7 @@ build:client:appbundle:
   stage: build
   script:
     - "cd client"
-    - "apt install android-sdk"
+    - "sudo apt install android-sdk -y"
     - "flutter doctor -v"
     - "flutter build appbundle"
     - "cp build/app/outputs/bundle/release/app-release.aab ../kiln-controller.aab"
