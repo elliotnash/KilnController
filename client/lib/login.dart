@@ -16,6 +16,16 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   final passwordCtl = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final query = MediaQuery.of(context);
@@ -119,6 +129,7 @@ class KilnTextField extends StatelessWidget {
     this.type = TextFieldType.text,
     this.autofocus = false,
     this.controller,
+    this.focusNode,
   }) : super(key: key);
 
   final String label;
@@ -126,6 +137,7 @@ class KilnTextField extends StatelessWidget {
   final TextFieldType type;
   final bool autofocus;
   final TextEditingController? controller;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +149,7 @@ class KilnTextField extends StatelessWidget {
       enableSuggestions: type == TextFieldType.password,
       autofocus: autofocus,
       controller: controller,
+      focusNode: focusNode,
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
