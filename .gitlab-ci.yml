@@ -16,14 +16,10 @@ build:client:web:
     expire_in: 1 week
 
 build:client:apk:
-  image: fischerscode/flutter:dev
+  image: itachi1706/flutter-alpine-android:dev
   stage: build
   script:
     - "cd client"
-    - "whoami"
-    - "su root"
-    - "apt install android-sdk -y"
-    - "exit"
     - "flutter doctor -v"
     - "flutter build apk"
     - "cp build/app/outputs/apk/release/app-release.apk ../kiln-controller.apk"
@@ -33,14 +29,10 @@ build:client:apk:
     expire_in: 1 week
 
 build:client:appbundle:
-  image: fischerscode/flutter:dev
+  image: itachi1706/flutter-alpine-android:dev
   stage: build
   script:
     - "cd client"
-    - "whoami"
-    - "su root"
-    - "apt install android-sdk -y"
-    - "exit"
     - "flutter doctor -v"
     - "flutter build appbundle"
     - "cp build/app/outputs/bundle/release/app-release.aab ../kiln-controller.aab"
