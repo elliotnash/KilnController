@@ -36,6 +36,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
   }
 
   void _submit() {
+    // update the login button to show loading animation
+    setState(() {
+      loginState = KilnLoginState.loading;
+    });
     print("logging in with email: ${_emailCtl.value.text}, "
         "password: ${_passwordCtl.value.text}");
     _loginFuture = kilnClient.login(true).asStream().listen((result) {
@@ -43,6 +47,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       context.vRouter.to(Home.route);
     });
   }
+
+  KilnLoginState loginState = KilnLoginState.content;
 
   @override
   Widget build(BuildContext context) {
@@ -111,23 +117,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       horizontal: 20,
                       vertical: 10,
                     ),
-                    child: OutlinedButton(
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all<OutlinedBorder>(
-                          const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                        child: Text(kSubmit),
-                      ),
+                    child: KilnLoginButton(
+                      child: const Text(kSubmit),
+                      state: loginState,
                       onPressed: () => _submit(),
                     ),
                   ),
@@ -140,6 +132,57 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     );
   }
 }
+
+class KilnLoginButton extends StatelessWidget {
+  const KilnLoginButton({
+    Key? key,
+    this.child,
+    this.onPressed,
+    this.state = KilnLoginState.content,
+  }) : super(key: key);
+
+  final Widget? child;
+  final VoidCallback? onPressed;
+  final KilnLoginState state;
+
+  Widget? _setupChild() {
+    switch (state) {
+      case KilnLoginState.content:
+        {
+          return child;
+        }
+      case KilnLoginState.loading:
+        {
+          return const CircularProgressIndicator();
+        }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(state == KilnLoginState.content ? 10 : 30),
+            ),
+          ),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: state == KilnLoginState.content ? 20 : 0,
+          vertical: 10,
+        ),
+        child: _setupChild(),
+      ),
+      onPressed: onPressed,
+    );
+  }
+}
+
+enum KilnLoginState { content, loading }
 
 class KilnTextField extends StatelessWidget {
   const KilnTextField({

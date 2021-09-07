@@ -4,7 +4,7 @@ class KilnClient {
     return _authenticated;
   }
   Future<bool> login(bool result) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 2));
     _authenticated = result;
     return result;
   }
