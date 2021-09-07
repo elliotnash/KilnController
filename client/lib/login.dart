@@ -40,8 +40,21 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       ),
       extendBody: true,
       drawerScrimColor: Colors.transparent,
-      body: const Center(
-        child: Text("This is a login page :)"),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const <Widget>[
+          Text("hhello"),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'User Name',
+                  hintText: 'Enter valid mail id as abc@gmail.com'
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
