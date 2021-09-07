@@ -3,7 +3,7 @@ stages:
   - build
 
 build:client:web:
-  image: cirrusci/flutter:dev
+  image: fischerscode/flutter:dev
   stage: build
   script:
     - "cd client"
@@ -16,12 +16,10 @@ build:client:web:
     expire_in: 1 week
 
 build:client:apk:
-  image: cirrusci/flutter:dev
+  image: fischerscode/flutter:dev
   stage: build
   script:
     - "cd client"
-    #- "flutter channel dev"
-    - "flutter upgrade"
     - "flutter doctor -v"
     - "flutter build apk"
     - "cp build/app/outputs/apk/release/app-release.apk ../kiln-controller.apk"
@@ -31,12 +29,10 @@ build:client:apk:
     expire_in: 1 week
 
 build:client:appbundle:
-  image: cirrusci/flutter:dev
+  image: fischerscode/flutter:dev
   stage: build
   script:
     - "cd client"
-    #- "flutter channel dev"
-    - "flutter upgrade"
     - "flutter doctor -v"
     - "flutter build appbundle"
     - "cp build/app/outputs/bundle/release/app-release.aab ../kiln-controller.aab"
@@ -61,7 +57,6 @@ build:client:linux:
     expire_in: 1 week
 
 build:client:windows:
-  image: openpriv/flutter-desktop:windows-sdk30-fdev2.5rc
   stage: build
   tags: 
     - windows
