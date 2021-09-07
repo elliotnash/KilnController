@@ -12,6 +12,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> with TickerProviderStateMixin {
+  final emailCtl = TextEditingController();
+  final passwordCtl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -101,12 +104,14 @@ class KilnTextField extends StatelessWidget {
     required this.hint,
     this.type = TextFieldType.text,
     this.autofocus = false,
+    this.controller,
   }) : super(key: key);
 
   final String label;
   final String hint;
   final TextFieldType type;
   final bool autofocus;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +122,7 @@ class KilnTextField extends StatelessWidget {
       obscureText: type == TextFieldType.password,
       enableSuggestions: type == TextFieldType.password,
       autofocus: autofocus,
+      controller: controller,
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
