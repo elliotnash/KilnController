@@ -13,18 +13,17 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> with TickerProviderStateMixin {
   final emailCtl = TextEditingController();
+  final FocusNode emailFocus = FocusNode();
   final passwordCtl = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final FocusNode passwordFocus = FocusNode();
 
   @override
   void dispose() {
     super.dispose();
     emailCtl.dispose();
+    emailFocus.dispose();
     passwordCtl.dispose();
+    passwordFocus.dispose();
   }
 
   @override
@@ -73,6 +72,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       type: TextFieldType.email,
                       autofocus: true,
                       controller: emailCtl,
+                      focusNode: emailFocus,
                     ),
                   ),
                   Padding(
@@ -83,6 +83,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       hint: kPasswordHint,
                       type: TextFieldType.password,
                       controller: passwordCtl,
+                      focusNode: passwordFocus,
                     ),
                   ),
                   Padding(
