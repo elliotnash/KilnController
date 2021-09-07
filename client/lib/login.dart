@@ -49,8 +49,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             child: TextField(
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'User Name',
-                  hintText: 'Enter valid mail id as abc@gmail.com'
+                  labelText: 'email',
+                  hintText: 'address@example.com'
               ),
             ),
           ),
