@@ -40,48 +40,53 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       //extendBody: true,
       drawerScrimColor: Colors.transparent,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text("Log In"),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: KilnTextField(
-                label: kEmailLabel,
-                hint: kEmailHint,
-                type: TextFieldType.email,
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: KilnTextField(
-                label: kPasswordLabel,
-                hint: kPasswordHint,
-                type: TextFieldType.password,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: OutlinedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
+        child: Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 500),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text("Log In"),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: KilnTextField(
+                    label: kEmailLabel,
+                    hint: kEmailHint,
+                    type: TextFieldType.email,
                   ),
                 ),
-                child: const Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Text(kSubmit),
+                  child: KilnTextField(
+                    label: kPasswordLabel,
+                    hint: kPasswordHint,
+                    type: TextFieldType.password,
+                  ),
                 ),
-                onPressed: () {
-                  print("oh yes you did it");
-                },
-              ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: OutlinedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Text(kSubmit),
+                    ),
+                    onPressed: () {
+                      print("oh yes you did it");
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
