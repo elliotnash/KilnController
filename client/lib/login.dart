@@ -41,7 +41,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       extendBody: true,
       drawerScrimColor: Colors.transparent,
       body: const Center(
-        child: Text("hi"),
+        child: Text("This is a login page :)"),
       ),
     );
   }

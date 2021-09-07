@@ -36,7 +36,14 @@ class _KilnControllerState extends State<KilnController> {
       darkTheme: KilnColors.darkTheme,
       themeMode: ThemeMode.system,
       routes: [
-        VWidget(path: '/', widget: const Home()),
+        VWidget(path: '/', widget: const LandingPage()),
+        VWidget(path: '/login', widget: const Login()),
+        VGuard(
+          beforeEnter: (vRedirector) async => _authenticated ? null : vRedirector.to('/login'),
+          stackedRoutes: [
+            VWidget(path: '/home', widget: const Home()),
+          ],
+        ),
       ],
       // initialRoute: LandingPage.route,
       // routes: {
@@ -95,7 +102,7 @@ class _LandingPageState extends State<LandingPage> {
     super.initState();
     _fetchFuture = fetchData().asStream().listen((_) {
       _authenticated = false;
-      Navigator.of(context).pushReplacementNamed(Home.route);
+      context.vRouter.to(Home.route);
     });
   }
 
