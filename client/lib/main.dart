@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kilncontroller/client.dart';
 import 'kiln_colors.dart';
 import 'consts.dart';
 import 'package:vrouter/vrouter.dart';
@@ -18,6 +19,8 @@ void main() async {
   ));
   runApp(const KilnController());
 }
+
+final kilnClient = KilnClient();
 
 class KilnController extends StatefulWidget {
   const KilnController({Key? key}) : super(key: key);
@@ -41,7 +44,7 @@ class _KilnControllerState extends State<KilnController> {
         VWidget(path: LandingPage.route, widget: const LandingPage()),
         VWidget(path: Login.route, widget: const Login()),
         VGuard(
-          beforeEnter: (vRedirector) async => _authenticated ? null : vRedirector.to(Login.route),
+          beforeEnter: (vRedirector) async => kilnClient.authenticated ? null : vRedirector.to(Login.route),
           stackedRoutes: [
             VWidget(path: Home.route, widget: const Home()),
           ],
@@ -50,11 +53,6 @@ class _KilnControllerState extends State<KilnController> {
     );
   }
 }
-
-Future<void> fetchData() async {
-  await Future.delayed(const Duration(seconds: 5));
-}
-bool _authenticated = true;
 
 class LandingPage extends StatefulWidget {
   static const route = "/";
@@ -66,21 +64,21 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
 
-  late StreamSubscription _fetchFuture;
+  StreamSubscription? _loginFuture;
 
   @override
   void initState() {
     super.initState();
-    _fetchFuture = fetchData().asStream().listen((_) {
-      _authenticated = true;
+    _loginFuture = kilnClient.login(false).asStream().listen((result) {
+      print("logged in with result $result");
       context.vRouter.to(Home.route);
     });
   }
 
   @override
   void dispose() {
+    _loginFuture?.cancel();
     super.dispose();
-    _fetchFuture.cancel();
   }
 
   @override

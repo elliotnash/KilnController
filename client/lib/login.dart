@@ -1,7 +1,12 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kilncontroller/consts.dart';
+import 'package:vrouter/vrouter.dart';
+
+import 'home.dart';
+import 'main.dart';
 
 class Login extends StatefulWidget {
   static const route = "/login";
@@ -12,23 +17,31 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> with TickerProviderStateMixin {
-  final emailCtl = TextEditingController();
-  final FocusNode emailFocus = FocusNode();
-  final passwordCtl = TextEditingController();
-  final FocusNode passwordFocus = FocusNode();
+  final _emailCtl = TextEditingController();
+  final FocusNode _emailFocus = FocusNode();
+  final _passwordCtl = TextEditingController();
+  final FocusNode _passwordFocus = FocusNode();
+
+  StreamSubscription? _loginFuture;
 
   @override
   void dispose() {
+    _loginFuture?.cancel();
+
+    _emailCtl.dispose();
+    _emailFocus.dispose();
+    _passwordCtl.dispose();
+    _passwordFocus.dispose();
     super.dispose();
-    emailCtl.dispose();
-    emailFocus.dispose();
-    passwordCtl.dispose();
-    passwordFocus.dispose();
   }
 
   void _submit() {
-    print("submit pressed. email: ${emailCtl.value.text}, "
-        "password: ${passwordCtl.value.text}");
+    print("logging in with email: ${_emailCtl.value.text}, "
+        "password: ${_passwordCtl.value.text}");
+    _loginFuture = kilnClient.login(true).asStream().listen((result) {
+      print("logged in with result $result");
+      context.vRouter.to(Home.route);
+    });
   }
 
   @override
@@ -76,9 +89,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       hint: kEmailHint,
                       type: TextFieldType.email,
                       autofocus: true,
-                      controller: emailCtl,
-                      focusNode: emailFocus,
-                      onSubmitted: (_) => passwordFocus.requestFocus(),
+                      controller: _emailCtl,
+                      focusNode: _emailFocus,
+                      onSubmitted: (_) => _passwordFocus.requestFocus(),
                     ),
                   ),
                   Padding(
@@ -88,8 +101,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       label: kPasswordLabel,
                       hint: kPasswordHint,
                       type: TextFieldType.password,
-                      controller: passwordCtl,
-                      focusNode: passwordFocus,
+                      controller: _passwordCtl,
+                      focusNode: _passwordFocus,
                       onSubmitted: (_) => _submit(),
                     ),
                   ),
