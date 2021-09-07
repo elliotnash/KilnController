@@ -47,6 +47,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         ),
       ),
       extendBody: true,
+      //TODO make hover cursor on web
       bottomNavigationBar: SafeArea(
         child: SnakeNavigationBar.color(
           behaviour: SnakeBarBehaviour.values[0],

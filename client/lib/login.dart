@@ -12,7 +12,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> with TickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -27,7 +26,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         backgroundColor: Colors.transparent,
         flexibleSpace: ClipRRect(
           borderRadius:
-          const BorderRadius.vertical(bottom: Radius.circular(15)),
+              const BorderRadius.vertical(bottom: Radius.circular(15)),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Container(
@@ -43,22 +42,43 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text("Log In"),
-            Padding(
+          children: <Widget>[
+            const Text("Log In"),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: KilnTextField(
-                label: "email",
-                hint: "account@example.com",
+                label: kEmailLabel,
+                hint: kEmailHint,
                 type: TextFieldType.email,
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: KilnTextField(
-                label: "password",
-                hint: "enter password",
+                label: kPasswordLabel,
+                hint: kPasswordHint,
                 type: TextFieldType.password,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: OutlinedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Text(kSubmit),
+                ),
+                onPressed: () {
+                  print("oh yes you did it");
+                },
               ),
             ),
           ],
@@ -84,22 +104,20 @@ class KilnTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return TextField(
-      autocorrect: type == TextFieldType.email || type == TextFieldType.password,
+      autocorrect:
+          type == TextFieldType.email || type == TextFieldType.password,
       obscureText: type == TextFieldType.password,
       enableSuggestions: type == TextFieldType.password,
       decoration: InputDecoration(
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          labelStyle: TextStyle(
-              color: theme.colorScheme.secondary,
-              fontSize: 18
-          ),
-          labelText: label,
-          hintText: hint,
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+        labelStyle: TextStyle(color: theme.colorScheme.secondary, fontSize: 18),
+        labelText: label,
+        hintText: hint,
       ),
     );
   }
 }
 
-enum TextFieldType{ text, email, password }
+enum TextFieldType { text, email, password }

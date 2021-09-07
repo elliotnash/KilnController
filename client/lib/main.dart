@@ -38,12 +38,12 @@ class _KilnControllerState extends State<KilnController> {
       mode: VRouterMode.history,
       // TODO add 404 page
       routes: [
-        VWidget(path: '/', widget: const LandingPage()),
-        VWidget(path: '/login', widget: const Login()),
+        VWidget(path: LandingPage.route, widget: const LandingPage()),
+        VWidget(path: Login.route, widget: const Login()),
         VGuard(
-          beforeEnter: (vRedirector) async => _authenticated ? null : vRedirector.to('/login'),
+          beforeEnter: (vRedirector) async => _authenticated ? null : vRedirector.to(Login.route),
           stackedRoutes: [
-            VWidget(path: '/home', widget: const Home()),
+            VWidget(path: Home.route, widget: const Home()),
           ],
         ),
       ],
