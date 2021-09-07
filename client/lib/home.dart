@@ -47,38 +47,41 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         ),
       ),
       extendBody: true,
-      //TODO make hover cursor on web
-      bottomNavigationBar: SafeArea(
-        child: SnakeNavigationBar.color(
-          behaviour: SnakeBarBehaviour.values[0],
-          snakeShape: SnakeShape.rectangle,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(25)),
+      //TODO maybe not possible: hover animation on nav bar
+      bottomNavigationBar: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: SafeArea(
+          child: SnakeNavigationBar.color(
+            behaviour: SnakeBarBehaviour.values[0],
+            snakeShape: SnakeShape.rectangle,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(25)),
+            ),
+            backgroundColor: theme.colorScheme.surface,
+            snakeViewColor: theme.colorScheme.primary,
+            selectedItemColor: theme.colorScheme.onPrimary,
+            unselectedItemColor: theme.colorScheme.onSurface,
+            showSelectedLabels: true,
+            currentIndex: _tab.index,
+            onTap: (index) {
+              Vibration.hasVibrator().then((hasVibrator) {
+                if (hasVibrator!) Vibration.vibrate(duration: 50);
+              });
+              setState(() {
+                _tab = _Tabs.values[index];
+                _controller.animateToPage(index,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut);
+              });
+            },
+            items: const [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.notifications), label: kHome),
+              BottomNavigationBarItem(icon: Icon(Icons.data_usage), label: kData),
+            ],
+            selectedLabelStyle: const TextStyle(fontSize: 14),
           ),
-          backgroundColor: theme.colorScheme.surface,
-          snakeViewColor: theme.colorScheme.primary,
-          selectedItemColor: theme.colorScheme.onPrimary,
-          unselectedItemColor: theme.colorScheme.onSurface,
-          showSelectedLabels: true,
-          currentIndex: _tab.index,
-          onTap: (index) {
-            Vibration.hasVibrator().then((hasVibrator) {
-              if (hasVibrator!) Vibration.vibrate(duration: 50);
-            });
-            setState(() {
-              _tab = _Tabs.values[index];
-              _controller.animateToPage(index,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut);
-            });
-          },
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.notifications), label: kHome),
-            BottomNavigationBarItem(icon: Icon(Icons.data_usage), label: kData),
-          ],
-          selectedLabelStyle: const TextStyle(fontSize: 14),
         ),
       ),
       drawer: const FrostDrawer(),

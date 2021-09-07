@@ -54,6 +54,7 @@ class _KilnControllerState extends State<KilnController> {
 Future<void> fetchData() async {
   await Future.delayed(const Duration(seconds: 5));
 }
+bool _authenticated = true;
 
 class LandingPage extends StatefulWidget {
   static const route = "/";
@@ -63,8 +64,6 @@ class LandingPage extends StatefulWidget {
   _LandingPageState createState() => _LandingPageState();
 }
 
-bool _authenticated = false;
-
 class _LandingPageState extends State<LandingPage> {
 
   late StreamSubscription _fetchFuture;
@@ -73,7 +72,7 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     _fetchFuture = fetchData().asStream().listen((_) {
-      _authenticated = false;
+      _authenticated = true;
       context.vRouter.to(Home.route);
     });
   }
