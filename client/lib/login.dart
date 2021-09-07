@@ -19,7 +19,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     final query = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
-      extendBodyBehindAppBar: true,
+      //extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text(kTitle),
         centerTitle: true,
@@ -38,24 +38,68 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
           ),
         ),
       ),
-      extendBody: true,
+      //extendBody: true,
       drawerScrimColor: Colors.transparent,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
-          Text("hhello"),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: TextField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'email',
-                  hintText: 'address@example.com'
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[
+            Text("Log In"),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: KilnTextField(
+                label: "email",
+                hint: "account@example.com",
+                type: TextFieldType.email,
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: KilnTextField(
+                label: "password",
+                hint: "enter password",
+                type: TextFieldType.password,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+class KilnTextField extends StatelessWidget {
+  const KilnTextField({
+    Key? key,
+    required this.label,
+    required this.hint,
+    this.type = TextFieldType.text,
+  }) : super(key: key);
+
+  final String label;
+  final String hint;
+  final TextFieldType type;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return TextField(
+      autocorrect: type == TextFieldType.email || type == TextFieldType.password,
+      obscureText: type == TextFieldType.password,
+      enableSuggestions: type == TextFieldType.password,
+      decoration: InputDecoration(
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          labelStyle: TextStyle(
+              color: theme.colorScheme.secondary,
+              fontSize: 18
+          ),
+          labelText: label,
+          hintText: hint,
+      ),
+    );
+  }
+}
+
+enum TextFieldType{ text, email, password }
