@@ -53,6 +53,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                     label: kEmailLabel,
                     hint: kEmailHint,
                     type: TextFieldType.email,
+                    autofocus: true,
                   ),
                 ),
                 const Padding(
@@ -99,11 +100,13 @@ class KilnTextField extends StatelessWidget {
     required this.label,
     required this.hint,
     this.type = TextFieldType.text,
+    this.autofocus = false,
   }) : super(key: key);
 
   final String label;
   final String hint;
   final TextFieldType type;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +116,7 @@ class KilnTextField extends StatelessWidget {
           type == TextFieldType.email || type == TextFieldType.password,
       obscureText: type == TextFieldType.password,
       enableSuggestions: type == TextFieldType.password,
+      autofocus: autofocus,
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
