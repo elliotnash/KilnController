@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'kiln_colors.dart';
 import 'consts.dart';
+import 'package:vrouter/vrouter.dart';
+
 
 import 'home.dart';
 import 'login.dart';
@@ -27,16 +30,85 @@ class _KilnControllerState extends State<KilnController> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return VRouter(
       title: kTitle,
       theme: KilnColors.lightTheme,
       darkTheme: KilnColors.darkTheme,
       themeMode: ThemeMode.system,
-      initialRoute: Login.route,
-      routes: {
-        Login.route: (context) => const Login(),
-        Home.route: (context) => const Home(),
-      },
+      routes: [
+        VWidget(path: '/', widget: const Home()),
+      ],
+      // initialRoute: LandingPage.route,
+      // routes: {
+      //   LandingPage.route: (context) => const LandingPage(),
+      //   Login.route: (context) => const Login(),
+      //   Home.route: (context) => const Home(),
+      // },
+      // onGenerateRoute: (settings) {
+      //   if (_authenticated) {
+      //     print("route changed but authed");
+      //     return MaterialPageRoute(
+      //         builder: (_) => const Home(),
+      //         settings: const RouteSettings(name: Home.route),
+      //     );
+      //   } else {
+      //     switch (settings.name){
+      //       case Login.route: {
+      //         return MaterialPageRoute(
+      //           builder: (_) => const Login(),
+      //           settings: const RouteSettings(name: Login.route),
+      //         );
+      //       }
+      //       default: {
+      //         return MaterialPageRoute(
+      //           builder: (_) => const LandingPage(),
+      //           settings: const RouteSettings(name: LandingPage.route),
+      //         );
+      //       }
+      //     }
+      //   }
+      //},
+    );
+  }
+}
+
+Future<void> fetchData() async {
+  await Future.delayed(const Duration(seconds: 5));
+}
+
+class LandingPage extends StatefulWidget {
+  static const route = "/";
+
+  const LandingPage({Key? key}) : super(key: key);
+  @override
+  _LandingPageState createState() => _LandingPageState();
+}
+
+bool _authenticated = false;
+
+class _LandingPageState extends State<LandingPage> {
+
+  late StreamSubscription _fetchFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchFuture = fetchData().asStream().listen((_) {
+      _authenticated = false;
+      Navigator.of(context).pushReplacementNamed(Home.route);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _fetchFuture.cancel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

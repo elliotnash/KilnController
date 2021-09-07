@@ -17,6 +17,7 @@ dependencies:
   flutter_snake_navigationbar: ^0.5.0
   vibration: ^1.7.4-nullsafety.0
   google_fonts: ^2.1.0
+  vrouter: ^1.2.0+12
 
 dev_dependencies:
   flutter_test:
