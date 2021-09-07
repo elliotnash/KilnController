@@ -20,7 +20,7 @@ build:client:apk:
   stage: build
   script:
     - "cd client"
-    - "flutter channel dev"
+    #- "flutter channel dev"
     - "flutter upgrade"
     - "flutter doctor -v"
     - "flutter build apk"
@@ -35,7 +35,7 @@ build:client:appbundle:
   stage: build
   script:
     - "cd client"
-    - "flutter channel dev"
+    #- "flutter channel dev"
     - "flutter upgrade"
     - "flutter doctor -v"
     - "flutter build appbundle"
