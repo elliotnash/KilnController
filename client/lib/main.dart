@@ -36,6 +36,7 @@ class _KilnControllerState extends State<KilnController> {
       darkTheme: KilnColors.darkTheme,
       themeMode: ThemeMode.system,
       mode: VRouterMode.history,
+      // TODO add 404 page
       routes: [
         VWidget(path: '/', widget: const LandingPage()),
         VWidget(path: '/login', widget: const Login()),
@@ -46,36 +47,6 @@ class _KilnControllerState extends State<KilnController> {
           ],
         ),
       ],
-      // initialRoute: LandingPage.route,
-      // routes: {
-      //   LandingPage.route: (context) => const LandingPage(),
-      //   Login.route: (context) => const Login(),
-      //   Home.route: (context) => const Home(),
-      // },
-      // onGenerateRoute: (settings) {
-      //   if (_authenticated) {
-      //     print("route changed but authed");
-      //     return MaterialPageRoute(
-      //         builder: (_) => const Home(),
-      //         settings: const RouteSettings(name: Home.route),
-      //     );
-      //   } else {
-      //     switch (settings.name){
-      //       case Login.route: {
-      //         return MaterialPageRoute(
-      //           builder: (_) => const Login(),
-      //           settings: const RouteSettings(name: Login.route),
-      //         );
-      //       }
-      //       default: {
-      //         return MaterialPageRoute(
-      //           builder: (_) => const LandingPage(),
-      //           settings: const RouteSettings(name: LandingPage.route),
-      //         );
-      //       }
-      //     }
-      //   }
-      //},
     );
   }
 }
@@ -124,46 +95,3 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 }
-
-// class RouteGenerator {
-//   static Route<dynamic> generateRoute(RouteSettings settings) {
-//     switch (settings.name) {
-//       case Home.route:
-//         return _GeneratePageRoute(
-//             widget: const Home(), routeName: settings.name!);
-//       case Login.route:
-//         return _GeneratePageRoute(
-//             widget: const Login(), routeName: settings.name!);
-//       // TODO add 404 route
-//       default:
-//         return _GeneratePageRoute(
-//             widget: const Login(), routeName: settings.name!);
-//     }
-//   }
-// }
-//
-// class _GeneratePageRoute extends PageRouteBuilder {
-//   final Widget widget;
-//   final String routeName;
-//   _GeneratePageRoute({required this.widget, required this.routeName})
-//       : super(
-//             settings: RouteSettings(name: routeName),
-//             pageBuilder: (BuildContext context, Animation<double> animation,
-//                 Animation<double> secondaryAnimation) {
-//               return widget;
-//             },
-//             transitionDuration: const Duration(milliseconds: 500),
-//             transitionsBuilder: (BuildContext context,
-//                 Animation<double> animation,
-//                 Animation<double> secondaryAnimation,
-//                 Widget child) {
-//               return SlideTransition(
-//                 textDirection: TextDirection.rtl,
-//                 position: Tween<Offset>(
-//                   begin: const Offset(1.0, 0.0),
-//                   end: Offset.zero,
-//                 ).animate(animation),
-//                 child: child,
-//               );
-//             });
-// }
