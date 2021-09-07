@@ -44,7 +44,7 @@ class _KilnControllerState extends State<KilnController> {
         VWidget(path: LandingPage.route, widget: const LandingPage()),
         VWidget(path: Login.route, widget: const Login()),
         VGuard(
-          beforeEnter: (vRedirector) async => kilnClient.authenticated ? null : vRedirector.to(Login.route),
+          beforeEnter: (vRedirector) async => kilnClient.authenticated ? null : vRedirector.to(LandingPage.route),
           stackedRoutes: [
             VWidget(path: Home.route, widget: const Home()),
           ],
@@ -71,7 +71,11 @@ class _LandingPageState extends State<LandingPage> {
     super.initState();
     _loginFuture = kilnClient.login(false).asStream().listen((result) {
       print("logged in with result $result");
-      context.vRouter.to(Home.route);
+      if (result){
+        context.vRouter.to(Home.route);
+      } else {
+        context.vRouter.to(Login.route);
+      }
     });
   }
 
