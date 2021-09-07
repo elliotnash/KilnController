@@ -52,21 +52,25 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const Text("Log In"),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
                     child: KilnTextField(
                       label: kEmailLabel,
                       hint: kEmailHint,
                       type: TextFieldType.email,
                       autofocus: true,
+                      controller: emailCtl,
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
                     child: KilnTextField(
                       label: kPasswordLabel,
                       hint: kPasswordHint,
                       type: TextFieldType.password,
+                      controller: passwordCtl,
                     ),
                   ),
                   Padding(
@@ -92,7 +96,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         child: Text(kSubmit),
                       ),
                       onPressed: () {
-                        print("oh yes you did it");
+                        print("submit pressed. email: ${emailCtl.value.text}, "
+                            "password: ${passwordCtl.value.text}");
                       },
                     ),
                   ),
