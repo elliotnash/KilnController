@@ -1,12 +1,13 @@
 use std::path::PathBuf;
 use std::error::Error;
-use chrono::{DateTime, Utc};
+use chrono::{Utc, TimeZone};
 use r2d2_sqlite::SqliteConnectionManager;
 use r2d2::Pool;
 use lazy_static::lazy_static;
 use rusqlite::params;
+use uuid::Uuid;
 
-use crate::model::ViewKiln;
+use crate::model::{ViewKiln, Firing};
 
 lazy_static!{
     static ref POOL: Pool<SqliteConnectionManager> = {
@@ -18,23 +19,58 @@ lazy_static!{
         conn.execute("
         CREATE TABLE IF NOT EXISTS data (
             time INTEGER PRIMARY KEY,
+            firing TEXT,
             data BLOB
-        )", []).unwrap();
+        );", []).unwrap();
+        conn.execute("
+        CREATE TABLE IF NOT EXISTS firings (
+            uuid TEXT PRIMARY KEY,
+            time INTEGER
+        );", []).unwrap();
         pool
     };
 }
 
-pub fn add_update(view_kiln: &ViewKiln) -> Result<(), Box<dyn Error>> {
+pub fn add_update(view_kiln: &ViewKiln, uuid: &Uuid) -> Result<(), Box<dyn Error>> {
     let conn = POOL.get().unwrap();
     let time = view_kiln.updated_at.timestamp_millis();
     let data = serde_json::to_vec(view_kiln).unwrap();
     conn.execute("
-    INSERT OR IGNORE INTO data (time, data) VALUES (?1, ?2)
-    ", params![time, data])?;
+    INSERT OR IGNORE INTO data (time, firing, data) VALUES (?1, ?2, ?3);
+    ", params![time, uuid.to_string(), data])?;
     Ok(())
 }
 
-pub fn get_updates(last_time: Option<DateTime<Utc>>) -> Result<Vec<ViewKiln>, Box<dyn Error>> {
+pub fn add_firing(uuid: &Uuid, time: i64) -> Result<(), Box<dyn Error>> {
+    let conn = POOL.get().unwrap();
+    conn.execute("
+    INSERT OR IGNORE INTO firings (uuid, time) VALUES (?1, ?2);
+    ", params![uuid.to_string(), time])?;
+    Ok(())
+}
+
+pub fn get_firings() -> Result<Vec<Firing>, Box<dyn Error>> {
+    let conn = POOL.get().unwrap();
+    let mut stmt = conn.prepare("
+    SELECT * FROM firings ORDER BY time DESC;
+    ")?;
+
+    let mut rows = stmt.query(params![])?;
+
+    let mut firings: Vec<Firing> = Vec::new();
+    while let Some(row) = rows.next()? {
+        let uuid: String = row.get(0)?;
+        let time: i64 = row.get(1)?;
+        firings.push(Firing{
+            uuid,
+            time: Utc.timestamp_millis(time)
+        });
+    }
+
+    Ok(firings)
+}
+
+pub fn get_updates(firing: String) -> Result<Vec<ViewKiln>, Box<dyn Error>> {
     let conn = POOL.get().unwrap();
     let mut stmt = conn.prepare("
     SELECT 
@@ -42,16 +78,12 @@ pub fn get_updates(last_time: Option<DateTime<Utc>>) -> Result<Vec<ViewKiln>, Bo
     FROM
         data
     WHERE
-        time < ?1
+        firing = ?1
     ORDER BY
-        time DESC
-    LIMIT ?2
+        time DESC;
     ")?;
 
-    let mut rows = stmt.query(params![
-        last_time.map(|t| t.timestamp_millis()).unwrap_or(i64::MAX),
-        5
-    ])?;
+    let mut rows = stmt.query(params![firing])?;
 
     let mut kilns: Vec<ViewKiln> = Vec::new();
     while let Some(row) = rows.next()? {

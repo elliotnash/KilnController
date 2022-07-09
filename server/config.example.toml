@@ -2,3 +2,6 @@
 [bartinst]
 email = "email"
 password = "password"
+
+[http]
+port = 8080

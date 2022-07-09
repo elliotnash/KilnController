@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct LoginRequest {
@@ -12,14 +11,14 @@ impl LoginRequest {
         Self{user: User{email, password}}
     }
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct User {
     pub email: String,
     pub password: String
 }
 
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct LoginResponse {
     pub authentication_token: String,
     pub controller_ids: Vec<String>,
@@ -34,6 +33,14 @@ pub struct LoginResponse {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct LoginError {
     message: String
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+
+pub struct Firing {
+    pub uuid: String,
+    #[serde(with = "epoch_date")]
+    pub time: DateTime<Utc>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -84,7 +91,7 @@ pub struct SlimFiring {
 pub struct ViewResponse {
     pub kilns: Vec<ViewKiln>
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ViewKiln {
     pub name: String,
     pub users: Vec<String>,
@@ -108,7 +115,7 @@ pub struct ViewKiln {
     pub latest_firing_start_time: DateTime<Utc>,
     pub latest_firing: ViewLastFiring
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ViewStatus {
     pub _id: String,
     pub fw: String,
@@ -122,7 +129,7 @@ pub struct ViewStatus {
     #[serde(flatten)]
     pub zones: HashMap<String, u16>
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ViewFiring {
     pub set_pt: u16,
     pub step: String,
@@ -135,7 +142,7 @@ pub struct ViewFiring {
     pub cost: u16,
     pub etr: String
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ViewDiag {
     pub a1: u16,
     pub a2: u16,
@@ -150,13 +157,13 @@ pub struct ViewDiag {
     pub last_err: u16,
     pub date: DateTime<Utc>
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ViewError {
     err_text: String,
     err_num: u16
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ViewConfig {
     pub _id: String,
     pub err_codes: String,
@@ -166,7 +173,7 @@ pub struct ViewConfig {
     pub num_zones: u16
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ViewProgram {
     pub _id: String,
     pub name: String,
@@ -180,7 +187,7 @@ pub struct ViewProgram {
     pub num_steps: u16,
     pub steps: Vec<ViewSteps>
 }
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ViewSteps {
     _id: String,
     t: u16,
@@ -190,7 +197,7 @@ pub struct ViewSteps {
     num: u16
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct ViewLastFiring {
     #[serde(with = "epoch_date")]
     pub start_time: DateTime<Utc>,

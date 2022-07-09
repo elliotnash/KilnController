@@ -5,7 +5,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Config {
-    pub bartinst: Bartinst
+    pub bartinst: Bartinst,
+    pub http: HttpConfig
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -13,6 +14,12 @@ pub struct Bartinst {
     pub email: String,
     pub password: String
 }
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct HttpConfig {
+    pub port: u16
+}
+
 
 impl Config {
     pub fn load() -> Self {
