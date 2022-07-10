@@ -6,12 +6,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return const CupertinoPageScaffold(
       child: Center(
-        child: CupertinoButton.filled(
-          onPressed: () => context.beamToNamed('/login'),
-          child: const Text('Click to Login'),
-        ),
+        child: Text("This is all the kiln info")
       ),
     );
   }
