@@ -4,18 +4,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kiln_controller/providers/auth_provider.dart';
 import 'package:kiln_controller/providers/dio_provider.dart';
 
-Timer? _refresh;
-// Contains all active hazards
-final FutureProvider<void> kilnInfoProvider = FutureProvider<void>((ref) async {
-  final auth = ref.watch(authProvider);
-  if (auth.state == AuthState.authenticated) {
-    // this is a really hacky way to auto refresh the hazards every 30 seconds
-    if (_refresh != null) {
-      _refresh!.cancel();
+class KilnInfoNotifier extends StateNotifier<String?> {
+  StateNotifierProviderRef ref;
+  Timer? _refresh;
+  KilnInfoNotifier(this.ref) : super(null) {
+    final auth = ref.watch(authProvider);
+    if (auth.state == AuthState.authenticated) {
+      _fetch(auth.serial!);
+      _refresh = Timer.periodic(
+        const Duration(seconds: 30),
+        (_) => _fetch(auth.serial!),
+      );
+    } else {
+      _refresh?.cancel();
     }
-    _refresh = Timer(const Duration(seconds: 30), () {
-      ref.refresh(kilnInfoProvider);
-    });
-    await ref.watch(dioProvider).get("info");
   }
+  Future _fetch(String serial) async {
+    final test = await ref.read(dioProvider).get("${serial}/info");
+    print(test.data);
+  }
+}
+
+final kilnInfoProvider = StateNotifierProvider<KilnInfoNotifier, String?>((ref) {
+  return KilnInfoNotifier(ref);
 });

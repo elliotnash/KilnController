@@ -33,9 +33,8 @@ class AuthNotifier extends StateNotifier<Auth> {
   }
 
   Future login(String email, String password) async {
-    var dio = ref.read(dioProvider);
     try {
-      final res = await dio.post("login", data: {
+      final res = await ref.read(dioProvider).post("login", data: {
         'email': email,
         'password': password,
       });
