@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kiln_controller/models/kiln_info.dart';
 import 'package:kiln_controller/providers/auth_provider.dart';
 import 'package:kiln_controller/providers/dio_provider.dart';
 
@@ -20,8 +23,9 @@ class KilnInfoNotifier extends StateNotifier<String?> {
     }
   }
   Future _fetch(String serial) async {
-    final test = await ref.read(dioProvider).get("${serial}/info");
-    print(test.data);
+    final res = await ref.read(dioProvider).get("${serial}/info");
+    final kilnInfo = KilnInfo.fromJson(res.data);
+    print(kilnInfo);
   }
 }
 
