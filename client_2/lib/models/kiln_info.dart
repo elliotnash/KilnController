@@ -54,6 +54,9 @@ class KilnInfo {
 
   factory KilnInfo.fromJson(Map<String, dynamic> json) => _$KilnInfoFromJson(json);
   Map<String, dynamic> toJson() => _$KilnInfoToJson(this);
+  
+  bool get connected => DateTime.now().difference(updatedAt.toLocal())
+      .inSeconds < 5;
 
   @override
   String toString() => toJson().toString();
