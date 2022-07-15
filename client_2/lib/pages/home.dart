@@ -193,7 +193,8 @@ class FiringGraph extends StatelessWidget {
                     final info = firing[s.last.spotIndex];
                     return [
                       LineTooltipItem(
-                        '${_hourFormat.format(info.updatedAt.toLocal())}',
+                        '${_hourFormat.format(info.updatedAt.toLocal())}\n'
+                            '${info.status.temp} °F',
                         CupertinoTheme.of(context).textTheme.textStyle,
                       ),
                       LineTooltipItem(
