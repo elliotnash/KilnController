@@ -49,23 +49,24 @@ class _HomePageState extends ConsumerState<HomePage> {
           ]);
         },
         children: [
-          Padding(
-            padding: EdgeInsets.only(top: 16, left: 12),
-            child: FiringGraph(
-              firing: firing,
-              onSelect: (info) => setState(() => this.info = info),
-              onSelectEnd: () => setState(() => info = null),
+          if (firing.isNotEmpty)
+            Padding(
+              padding: EdgeInsets.only(top: 16, left: 12),
+              child: FiringGraph(
+                firing: firing,
+                onSelect: (info) => setState(() => this.info = info),
+                onSelectEnd: () => setState(() => info = null),
+              ),
             ),
-          ),
           Separator(),
           InfoItem(title: 'Status', content: dispInfo!.status.mode),
           InfoItem(title: 'Last Update', content: _fullFormat.format(dispInfo.updatedAt.toLocal())),
           InfoItem(title: 'Program', content: dispInfo.program.name),
           InfoItem(title: 'Ramp', content: dispInfo.status.mode == "Firing" ? dispInfo.status.firing.step : "Complete"),
-          InfoItem(title: 'Average Temperature', content: dispInfo.status.temp.round().toString()),
-          InfoItem(title: 'Zone 1 Temperature', content: dispInfo.status.t1.toString()),
-          InfoItem(title: 'Zone 2 Temperature', content: dispInfo.status.t2.toString()),
-          InfoItem(title: 'Zone 3 Temperature', content: dispInfo.status.t3.toString()),
+          InfoItem(title: 'Average Temperature', content: '${dispInfo.status.temp.round().toString()} °F'),
+          InfoItem(title: 'Zone 1 Temperature', content: '${dispInfo.status.t1.toString()} °F'),
+          InfoItem(title: 'Zone 2 Temperature', content: '${dispInfo.status.t2.toString()} °F'),
+          InfoItem(title: 'Zone 3 Temperature', content: '${dispInfo.status.t3.toString()} °F'),
           InfoItem(title: 'Total Firings', content: dispInfo.status.numFire.toString()),
           InfoItem(title: 'Firmware', content: dispInfo.firmwareVersion),
         ],
@@ -132,7 +133,7 @@ class FiringGraph extends StatelessWidget {
     final scale = mid/10;
 
     final int sample = 10;
-    final List<FlSpot> slopeSpots = [];
+    final List<FlSpot> slopeSpots = [FlSpot(firing[0].updatedAt.millisecondsSinceEpoch.toDouble(), mid)];
     for (int i=1; i<firing.length; i++) {
       final ss = max(0, i-sample);
       final incX = firing[i].updatedAt.difference(firing[ss].updatedAt).inMinutes;
@@ -179,22 +180,27 @@ class FiringGraph extends StatelessWidget {
                     onSelect(firing[index]);
                   }
                 },
-                // touchTooltipData: LineTouchTooltipData(
-                //   fitInsideVertically: true,
-                //   fitInsideHorizontally: true,
-                //   tooltipBgColor: CupertinoTheme.of(context).barBackgroundColor,
-                //   getTooltipItems: (s) {
-                //     final info = firing[s.first.spotIndex];
-                //     return [
-                //       LineTooltipItem(
-                //         '${_hourFormat.format(info.updatedAt.toLocal())}',
-                //         CupertinoTheme.of(context).textTheme.textStyle,
-                //       )
-                //     ];
-                //   },
-                // )
+                touchTooltipData: LineTouchTooltipData(
+                  fitInsideVertically: true,
+                  fitInsideHorizontally: true,
+                  tooltipBgColor: CupertinoTheme.of(context).barBackgroundColor,
+                  getTooltipItems: (s) {
+                    final info = firing[s.last.spotIndex];
+                    return [
+                      LineTooltipItem(
+                        '${_hourFormat.format(info.updatedAt.toLocal())}',
+                        CupertinoTheme.of(context).textTheme.textStyle,
+                      ),
+                      LineTooltipItem(
+                        '${((slopeSpots[s.last.spotIndex].y-mid)/scale).toStringAsFixed(2)} °F/min',
+                        CupertinoTheme.of(context).textTheme.textStyle,
+                      ),
+                    ];
+                  },
+                )
               ),
               gridData: FlGridData(show: true),
+              borderData: FlBorderData(show: false),
               titlesData: FlTitlesData(
                   topTitles: AxisTitles(),
                   rightTitles: AxisTitles(
