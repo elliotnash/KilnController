@@ -1,14 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:kiln_controller/models/epoch_serializer.dart';
 
 part 'kiln_info.g.dart';
-
-class EpochDatetimeSerializer implements JsonConverter<DateTime, String> {
-  const EpochDatetimeSerializer();
-  DateTime fromJson(String date) =>
-      DateTime.fromMillisecondsSinceEpoch(int.parse(date), isUtc: true);
-  String toJson(DateTime date) =>
-      date.toUtc().millisecondsSinceEpoch.toString();
-}
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class KilnInfo {
@@ -80,6 +73,7 @@ class KilnStatus {
   final int t1;
   final int t2;
   final int t3;
+  double get temp => ((t1+t2+t3)/3);
 
   KilnStatus({
     required this.id,

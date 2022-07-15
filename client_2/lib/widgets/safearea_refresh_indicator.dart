@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 const double _kActivityIndicatorRadius = 14.0;
-const double _kActivityIndicatorMargin = 16.0;
+const double _kActivityIndicatorMargin = 20.0;
 
 Widget buildSafeAreaRefreshIndicator(
   BuildContext context,
