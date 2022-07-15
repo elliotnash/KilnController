@@ -1,4 +1,4 @@
-# client_2
+# Kiln Controller
 
 Reverse engineered client for Bartinst kiln controllers
 
