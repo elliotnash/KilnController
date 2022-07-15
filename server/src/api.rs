@@ -1,3 +1,4 @@
+use actix_cors::Cors;
 use actix_web::{get, post, web, App, HttpServer, Responder, Result};
 use crate::{LoginResponse, CONFIG, db};
 use crate::model::User;
@@ -59,7 +60,9 @@ async fn firing(params: web::Path<(String, String)>, cred: web::Data<LoginRespon
 
 pub async fn run(cred: LoginResponse) -> Result<(), std::io::Error> {
     HttpServer::new(move || {
+        let cors = Cors::permissive();
         App::new()
+            .wrap(cors)
             .app_data(web::Data::new(cred.clone()))
             .service(login)
             .service(info)
