@@ -140,8 +140,7 @@ class FiringGraph extends StatelessWidget {
       final incY = firing[i].status.temp - firing[ss].status.temp;
       final slope = (incY/incX);
       if (slope.abs() != double.infinity) {
-        slopeSpots.add(FlSpot(
-            firing[i].updatedAt.millisecondsSinceEpoch.toDouble(), slope*scale+mid));
+        slopeSpots.add(FlSpot(firing[i].updatedAt.millisecondsSinceEpoch.toDouble(), slope*scale+mid));
       }
     }
     slopeSpots.insert(0, slopeSpots.first.copyWith(x: firing.first.updatedAt.millisecondsSinceEpoch.toDouble()));
@@ -174,8 +173,13 @@ class FiringGraph extends StatelessWidget {
               minY: 0,
               lineTouchData: LineTouchData(
                 touchCallback: (event, s) {
+                  print(event);
                   final index = s?.lineBarSpots?.first.spotIndex;
-                  if (event is FlLongPressEnd || event is FlTapUpEvent || event is FlPanEndEvent) {
+                  if (event is FlLongPressEnd
+                      || event is FlTapUpEvent
+                      || event is FlPanEndEvent
+                      || event is FlPointerExitEvent
+                  ) {
                     onSelectEnd();
                   } else if (index != null) {
                     onSelect(firing[index]);
@@ -208,7 +212,7 @@ class FiringGraph extends StatelessWidget {
                     sideTitles: SideTitles(
                       showTitles: true,
                       reservedSize: 40,
-                      getTitlesWidget: (yVal, meta) => Text(((yVal-mid)/scale).round().toString()),
+                      getTitlesWidget: (yVal, meta) => Text("  ${((yVal-mid)/scale).round().toString()}"),
                     )
                   ),
                   // leftTitles: AxisTitles(
