@@ -1,6 +1,6 @@
 {
     "name": "Kiln Controller",
-    "short_name": "kiln_controller",
+    "short_name": "Kiln Controller",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#F9F9F9",
