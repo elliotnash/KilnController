@@ -133,7 +133,7 @@ class FiringGraph extends StatelessWidget {
     final scale = mid/10;
 
     final int sample = 10;
-    final List<FlSpot> slopeSpots = [FlSpot(firing[0].updatedAt.millisecondsSinceEpoch.toDouble(), mid)];
+    final List<FlSpot> slopeSpots = [];
     for (int i=1; i<firing.length; i++) {
       final ss = max(0, i-sample);
       final incX = firing[i].updatedAt.difference(firing[ss].updatedAt).inMinutes;
@@ -144,6 +144,7 @@ class FiringGraph extends StatelessWidget {
             firing[i].updatedAt.millisecondsSinceEpoch.toDouble(), slope*scale+mid));
       }
     }
+    slopeSpots.insert(0, slopeSpots.first.copyWith(x: firing.first.updatedAt.millisecondsSinceEpoch.toDouble()));
 
     return Padding(
       padding: EdgeInsets.zero,
