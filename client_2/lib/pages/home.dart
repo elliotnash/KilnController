@@ -194,7 +194,7 @@ class FiringGraph extends StatelessWidget {
                     return [
                       LineTooltipItem(
                         '${_hourFormat.format(info.updatedAt.toLocal())}\n'
-                            '${info.status.temp} °F',
+                            '${info.status.temp.round()} °F',
                         CupertinoTheme.of(context).textTheme.textStyle,
                       ),
                       LineTooltipItem(
