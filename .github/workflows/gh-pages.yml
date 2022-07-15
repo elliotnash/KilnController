@@ -12,4 +12,4 @@ jobs:
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
           workingDir: client_2
-          baseHref: /kiln-controller/
+          baseHref: /KilnController/
