@@ -2,10 +2,13 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'kiln_info.g.dart';
 
-DateTime _epochFromJson(String date) =>
-    DateTime.fromMillisecondsSinceEpoch(int.parse(date), isUtc: true);
-String _epochToJson(DateTime date) =>
-    date.toUtc().millisecondsSinceEpoch.toString();
+class EpochDatetimeSerializer implements JsonConverter<DateTime, String> {
+  const EpochDatetimeSerializer();
+  DateTime fromJson(String date) =>
+      DateTime.fromMillisecondsSinceEpoch(int.parse(date), isUtc: true);
+  String toJson(DateTime date) =>
+      date.toUtc().millisecondsSinceEpoch.toString();
+}
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class KilnInfo {
@@ -27,7 +30,7 @@ class KilnInfo {
   final DateTime updatedAt;
   final int firingsCount;
   final DateTime isPremiumUpdated;
-  @JsonKey(fromJson: _epochFromJson, toJson: _epochToJson)
+  @EpochDatetimeSerializer()
   final DateTime latestFiringStartTime;
   final LatestFiring latestFiring;
 
@@ -276,12 +279,12 @@ class ProgramStep {
 class LatestFiring {
   final bool ended;
   final bool justEnded;
-  @JsonKey(fromJson: _epochFromJson, toJson: _epochToJson)
+  @EpochDatetimeSerializer()
   final DateTime startTime;
-  @JsonKey(fromJson: _epochFromJson, toJson: _epochToJson)
+  @EpochDatetimeSerializer()
   final DateTime updateTime;
-  @JsonKey(fromJson: _epochFromJson, toJson: _epochToJson)
-  final DateTime endedTime;
+  @EpochDatetimeSerializer()
+  final DateTime? endedTime;
 
   LatestFiring({
     required this.ended,
